@@ -19,8 +19,6 @@ enum Message {
     
     //Struct to data
     func archive() -> Data {
-        let aaa = self
-        print(aaa)
         var data = self
         return Data(bytes: &data, count: MemoryLayout.stride(ofValue: data))
     }

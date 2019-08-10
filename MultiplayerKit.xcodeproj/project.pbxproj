@@ -22,6 +22,9 @@
 		6C99F99222FC9A0B00B8C80B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6C99F99022FC9A0B00B8C80B /* Main.storyboard */; };
 		6C99F99422FC9A0C00B8C80B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6C99F99322FC9A0C00B8C80B /* Assets.xcassets */; };
 		6C99F99722FC9A0C00B8C80B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6C99F99522FC9A0C00B8C80B /* LaunchScreen.storyboard */; };
+		6CEFC58922FF285300FA5D3A /* ReceiveDataDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CEFC58822FF285300FA5D3A /* ReceiveDataDelegate.swift */; };
+		6CEFC58C22FF287E00FA5D3A /* UpdateSceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CEFC58B22FF287E00FA5D3A /* UpdateSceneDelegate.swift */; };
+		6CEFC58E22FF28D100FA5D3A /* ConnectionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CEFC58D22FF28D100FA5D3A /* ConnectionDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +58,9 @@
 		6C99F99322FC9A0C00B8C80B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6C99F99622FC9A0C00B8C80B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6C99F99822FC9A0C00B8C80B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6CEFC58822FF285300FA5D3A /* ReceiveDataDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiveDataDelegate.swift; sourceTree = "<group>"; };
+		6CEFC58B22FF287E00FA5D3A /* UpdateSceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateSceneDelegate.swift; sourceTree = "<group>"; };
+		6CEFC58D22FF28D100FA5D3A /* ConnectionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionDelegate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +118,7 @@
 				6C7031EB22FE047E005055B0 /* Message.swift */,
 				6C7031EA22FE047E005055B0 /* MultiplayerService.swift */,
 				6C7031E822FE047E005055B0 /* NotificationName.swift */,
+				6CEFC58A22FF286700FA5D3A /* Delegates */,
 			);
 			path = MultiplayerKit;
 			sourceTree = "<group>";
@@ -139,6 +146,16 @@
 				6C99F99822FC9A0C00B8C80B /* Info.plist */,
 			);
 			path = Demo;
+			sourceTree = "<group>";
+		};
+		6CEFC58A22FF286700FA5D3A /* Delegates */ = {
+			isa = PBXGroup;
+			children = (
+				6CEFC58822FF285300FA5D3A /* ReceiveDataDelegate.swift */,
+				6CEFC58B22FF287E00FA5D3A /* UpdateSceneDelegate.swift */,
+				6CEFC58D22FF28D100FA5D3A /* ConnectionDelegate.swift */,
+			);
+			path = Delegates;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -325,7 +342,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6CEFC58C22FF287E00FA5D3A /* UpdateSceneDelegate.swift in Sources */,
 				6C7031ED22FE047E005055B0 /* GameCenterService.swift in Sources */,
+				6CEFC58E22FF28D100FA5D3A /* ConnectionDelegate.swift in Sources */,
+				6CEFC58922FF285300FA5D3A /* ReceiveDataDelegate.swift in Sources */,
 				6C7031EF22FE047E005055B0 /* Message.swift in Sources */,
 				6C7031EE22FE047E005055B0 /* MultiplayerService.swift in Sources */,
 				6C7031EC22FE047E005055B0 /* NotificationName.swift in Sources */,

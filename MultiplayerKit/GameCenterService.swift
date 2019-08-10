@@ -14,7 +14,7 @@ class GameCenterService: NSObject {
     var authenticationViewController: UIViewController?
     var currentMatch: GKMatch?
     var currentMatchmakerVC: GKMatchmakerViewController?
-    weak var playerConnectedDelegate: PlayerConnectedDelegate?
+    weak var playerConnectedDelegate: ConnectionDelegate?
     
     //var receiveDataDelegate: ReceiveDataDelegate?
     static var isAuthenticated: Bool {
@@ -129,8 +129,4 @@ extension GameCenterService: GKLocalPlayerListener {
             }
         }
     }
-}
-
-protocol PlayerConnectedDelegate: class {
-    func didPlayerConnected()
 }
