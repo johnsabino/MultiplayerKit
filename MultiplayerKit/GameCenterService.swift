@@ -14,9 +14,8 @@ class GameCenterService: NSObject {
     var authenticationViewController: UIViewController?
     var currentMatch: GKMatch?
     var currentMatchmakerVC: GKMatchmakerViewController?
-    weak var playerConnectedDelegate: ConnectionDelegate?
-    
-    //var receiveDataDelegate: ReceiveDataDelegate?
+    weak var connectionDelegate: ConnectionDelegate?
+    weak var receiveDataDelegate: ReceiveDataDelegate?
     static var isAuthenticated: Bool {
         return GKLocalPlayer.local.isAuthenticated
     }
@@ -89,6 +88,12 @@ extension GameCenterService: GKMatchmakerViewControllerDelegate {
         
     }
     
+    func startGame(match: GKMatch) {
+        self.currentMatch = match
+        match.delegate = self
+//        MultiplayerService.shared.sendData
+    }
+    
 }
 
 extension GameCenterService: GKMatchDelegate {
@@ -102,7 +107,7 @@ extension GameCenterService: GKMatchDelegate {
         switch state {
         case GKPlayerConnectionState.connected:
             print("Player Conected!")
-            playerConnectedDelegate?.didPlayerConnected()
+            connectionDelegate?.didPlayerConnected()
             
         case GKPlayerConnectionState.disconnected:
             print("Player Disconected!")

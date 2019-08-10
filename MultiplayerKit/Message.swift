@@ -8,14 +8,8 @@
 
 import Foundation
 
-enum MessageType {
-    
-}
-
 enum Message {
-    case move(dx: Float, dy: Float)
-    case pressA
-    case pressB
+    case startGame
     
     //Struct to data
     func archive() -> Data {
