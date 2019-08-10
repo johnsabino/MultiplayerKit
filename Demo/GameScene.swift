@@ -11,9 +11,17 @@ import GameplayKit
 
 class GameScene: SKScene {
     var inputController: InputController!
+    
+    var player: SKSpriteNode!
+    
     override func didMove(to view: SKView) {
-        backgroundColor = SKColor.gray
+        backgroundColor = SKColor.black
+        setupCamera()
         setupJoystick()
+        
+        player = SKSpriteNode(color: UIColor.purple, size: CGSize(width: 60, height: 60))
+        player.position = CGPoint.zero
+        addChild(player)
     }
     
     func setupJoystick() {
@@ -28,6 +36,11 @@ class GameScene: SKScene {
         }
         
     }
+    func setupCamera() {
+        let camera = SKCameraNode()
+        self.camera = camera
+        self.addChild(camera)
+    }
 }
 
 extension GameScene: JoystickDelegate {
@@ -39,8 +52,11 @@ extension GameScene: JoystickDelegate {
         
     }
     
-    func joystickUpdateTracking(direction: CGPoint) {
-        
+    func joystickUpdateTracking(direction: CGPoint, angle: CGFloat) {
+        player.position.x += direction.x * 0.1
+        player.position.y += direction.y * 0.1
+        player.zRotation = -(angle)
+        print("direction: \(direction), angle: \(angle)")
     }
     
     func joystickDidEndTracking(direction: CGPoint) {

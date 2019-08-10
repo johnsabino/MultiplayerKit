@@ -57,7 +57,7 @@ class InputController: SKSpriteNode {
     
     @objc func update() {
         if joystick.tracking {
-            joystickDelegate?.joystickUpdateTracking(direction: joystick.direction)
+            joystickDelegate?.joystickUpdateTracking(direction: joystick.direction, angle: joystick.angle)
         }
     }
     

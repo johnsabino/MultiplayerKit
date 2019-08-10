@@ -27,7 +27,7 @@ protocol JoystickDelegate: class {
      If the direction is in the left side of joystick,
      the direction is negative, in the right side, positive.
      */
-    func joystickUpdateTracking(direction: CGPoint)
+    func joystickUpdateTracking(direction: CGPoint, angle: CGFloat)
     /**
      Callend after joystick ended tracking(deactivated).
      - parameter direction: joystick's direction.

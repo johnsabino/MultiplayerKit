@@ -13,7 +13,8 @@ open class JoystickNode: SKNode {
     var stick: JoystickComponent!
     var joystickIsEnabled = true
     private(set) var tracking = false
-    private(set) var direction = CGPoint.zero 
+    private(set) var direction = CGPoint.zero
+    private(set) var angle = CGFloat.zero
     
     weak var joystickDelegate: JoystickDelegate?
     var disabled: Bool {
@@ -103,6 +104,7 @@ open class JoystickNode: SKNode {
             stick.position = needPosition
             
             direction = needPosition
+            angle = atan2(direction.x, direction.y)
             
             //joystickDelegate?.joystickDidMoved(direction: needPosition)
         }
