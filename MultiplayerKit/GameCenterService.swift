@@ -16,6 +16,7 @@ class GameCenterService: NSObject {
     var currentMatchmakerVC: GKMatchmakerViewController?
     weak var connectionDelegate: ConnectionDelegate?
     weak var receiveDataDelegate: ReceiveDataDelegate?
+    
     static var isAuthenticated: Bool {
         return GKLocalPlayer.local.isAuthenticated
     }

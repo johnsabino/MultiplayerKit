@@ -6,17 +6,19 @@
 //  Copyright © 2019 João Paulo de Oliveira Sabino. All rights reserved.
 //
 
-import Foundation
+import GameKit
 
 enum Message {
     case startGame
     case send(position: CGPoint)
+    case sendAttack(hittedPlayers: GKPlayer)
     
     //Struct to data
     func archive() -> Data {
         var data = self
         return Data(bytes: &data, count: MemoryLayout.stride(ofValue: data))
     }
+    
     //Data to struct
     static func unarchive(_ data: Data) -> Message? {
         guard data.count == MemoryLayout<Message>.stride else {

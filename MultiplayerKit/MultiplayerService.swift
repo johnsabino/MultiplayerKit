@@ -52,7 +52,8 @@ extension MultiplayerService: ReceiveDataDelegate {
             print("START GAME")
         case .send(let position):
             print("position: \(position)")
-        
+        case .sendAttack(let hittedPlayers):
+            print("hittedPlayer: \(hittedPlayers.alias)")
         }
     }
     
