@@ -14,8 +14,8 @@ open class MPMenuScene: SKScene {
     var multiplayerGameScene: SKScene!
     
     // MARK: Inits
-    override init(size: CGSize) {
-        super.init()
+    override public init(size: CGSize) {
+        super.init(size: size)
     }
     convenience public init(multiplayerGameScene: SKScene) {
         self.init(size: multiplayerGameScene.size)

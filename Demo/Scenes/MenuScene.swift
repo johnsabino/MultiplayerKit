@@ -12,7 +12,7 @@ import MultiplayerKit
 
 class MenuScene: MPMenuScene {
     var startButton: ButtonNode!
-    override func authenticationChanged(_ notification: Notification) {
-        
-    }
+//    override func authenticationChanged(_ notification: Notification) {
+//        
+//    }
 }
