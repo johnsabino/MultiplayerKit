@@ -10,7 +10,7 @@ import GameKit
 
 public class MultiplayerService: NSObject {
     //singleton of Multiplayer service
-    static let shared = MultiplayerService()
+    public static let shared = MultiplayerService()
     
     //reference to GameCenter service singleton
     let gameCenterService = GameCenterService.shared
@@ -34,7 +34,7 @@ public class MultiplayerService: NSObject {
         gameCenterService.receiveDataDelegate = self
     }
     
-    func sendData(data: Message, sendDataMode: GKMatch.SendDataMode = .reliable) {
+    public func sendData(data: Message, sendDataMode: GKMatch.SendDataMode = .reliable) {
         
         do {
             let dataArchived = data.archive()

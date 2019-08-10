@@ -8,11 +8,13 @@
 
 import SpriteKit
 import GameplayKit
+import MultiplayerKit
 
 class GameScene: SKScene {
     var inputController: InputController!
     
     var player: SKSpriteNode!
+    var multiplayer = MultiplayerService.shared
     
     override func didMove(to view: SKView) {
         backgroundColor = SKColor.black
@@ -57,6 +59,8 @@ extension GameScene: JoystickDelegate {
         player.position.y += direction.y * 0.1
         player.zRotation = -(angle)
         print("direction: \(direction), angle: \(angle)")
+        
+        multiplayer.sendData(data: .send(position: direction))
     }
     
     func joystickDidEndTracking(direction: CGPoint) {
@@ -72,6 +76,13 @@ extension GameScene: JoystickDelegate {
     }
     
     func joystickDidTapDown() {
+        
+    }
+    
+}
+
+extension GameScene: UpdateSceneDelegate {
+    func update(playerPosition: CGPoint, angle: CGFloat) {
         
     }
     

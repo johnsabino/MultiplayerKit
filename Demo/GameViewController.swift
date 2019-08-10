@@ -9,6 +9,7 @@
 import UIKit
 import SpriteKit
 import GameplayKit
+import MultiplayerKit
 
 class GameViewController: UIViewController {
 

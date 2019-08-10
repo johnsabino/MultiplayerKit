@@ -9,9 +9,9 @@
 import GameKit
 
 public class GameCenterService: NSObject {
-    static let shared = GameCenterService()
+    public static let shared = GameCenterService()
     
-    var authenticationViewController: UIViewController?
+    public var authenticationViewController: UIViewController?
     var currentMatch: GKMatch?
     var currentMatchmakerVC: GKMatchmakerViewController?
     weak var connectionDelegate: ConnectionDelegate?
