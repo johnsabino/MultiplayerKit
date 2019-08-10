@@ -17,7 +17,7 @@ class GameViewController: UIViewController {
         super.viewDidLoad()
         
         if let skView = view as? SKView {
-            let scene = GameScene(size: view.frame.size)
+            let scene = MenuScene(multiplayerGameScene: GameScene())
             scene.anchorPoint = CGPoint(x: 0.5, y: 0.5)
             scene.scaleMode = .resizeFill
             skView.presentScene(scene)

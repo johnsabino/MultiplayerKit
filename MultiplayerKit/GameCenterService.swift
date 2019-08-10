@@ -12,7 +12,7 @@ public class GameCenterService: NSObject {
     public static let shared = GameCenterService()
     
     public var authenticationViewController: UIViewController?
-    var currentMatch: GKMatch?
+    public var currentMatch: GKMatch?
     var currentMatchmakerVC: GKMatchmakerViewController?
     weak var connectionDelegate: ConnectionDelegate?
     weak var receiveDataDelegate: ReceiveDataDelegate?

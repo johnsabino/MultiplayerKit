@@ -27,9 +27,9 @@ public class MultiplayerService: NSObject {
         return match.players
         
     }
-    weak var updateSceneDelegate: UpdateSceneDelegate?
+    public weak var updateSceneDelegate: UpdateSceneDelegate?
     
-    override init() {
+    override public init() {
         super.init()
         gameCenterService.receiveDataDelegate = self
     }

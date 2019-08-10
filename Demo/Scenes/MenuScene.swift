@@ -6,4 +6,13 @@
 //  Copyright © 2019 João Paulo de Oliveira Sabino. All rights reserved.
 //
 
-import Foundation
+import SpriteKit
+import GameKit
+import MultiplayerKit
+
+class MenuScene: MPMenuScene {
+    var startButton: ButtonNode!
+    override func authenticationChanged(_ notification: Notification) {
+        
+    }
+}

@@ -7,16 +7,17 @@
 //
 
 import SpriteKit
-import GameplayKit
 import MultiplayerKit
 
 class GameScene: SKScene {
     var inputController: InputController!
     
     var player: SKSpriteNode!
-    var multiplayer = MultiplayerService.shared
+    var multiplayer = MultiplayerService()
     
     override func didMove(to view: SKView) {
+        
+        multiplayer.updateSceneDelegate = self
         backgroundColor = SKColor.black
         setupCamera()
         setupJoystick()
@@ -81,9 +82,16 @@ extension GameScene: JoystickDelegate {
     
 }
 
-extension GameScene: UpdateSceneDelegate {
-    func update(playerPosition: CGPoint, angle: CGFloat) {
+// MARK: update scene
+extension GameScene {
+    override func update(playerPosition: CGPoint, angle: CGFloat) {
         
     }
-    
+}
+
+// MARK: connections
+extension GameScene {
+    override func didPlayerConnected() {
+        
+    }
 }
