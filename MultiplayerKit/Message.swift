@@ -10,6 +10,7 @@ import Foundation
 
 enum Message {
     case startGame
+    case send(position: CGPoint)
     
     //Struct to data
     func archive() -> Data {

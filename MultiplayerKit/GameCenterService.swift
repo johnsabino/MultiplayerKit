@@ -74,13 +74,9 @@ extension GameCenterService: GKMatchmakerViewControllerDelegate {
     }
     
     func matchmakerViewController(_ viewController: GKMatchmakerViewController, didFind match: GKMatch) {
-        self.currentMatch = match
-        match.delegate = self
         
-        //MultiplayerService.shared.setRandomNumber()
-        //MultiplayerService.shared.startingGame()
+        startGame(match: match)
         
-        NotificationCenter.default.post(name: .presentGame, object: match)
         if let vc = currentMatchmakerVC {
             currentMatchmakerVC = nil
             vc.dismiss(animated: true)
@@ -91,14 +87,21 @@ extension GameCenterService: GKMatchmakerViewControllerDelegate {
     func startGame(match: GKMatch) {
         self.currentMatch = match
         match.delegate = self
-//        MultiplayerService.shared.sendData
+        MultiplayerService.shared.sendData(data: Message.startGame)
+        NotificationCenter.default.post(name: .presentGame, object: match)
     }
     
 }
 
 extension GameCenterService: GKMatchDelegate {
     func match(_ match: GKMatch, didReceive data: Data, fromRemotePlayer player: GKPlayer) {
-        
+        if let dataUnarchived = Message.unarchive(data) {
+            receiveDataDelegate?.didReceive(message: dataUnarchived, from: player)
+            
+            if case .startGame = dataUnarchived {
+                print("START GAME 2")
+            }
+        }
     }
     
     func match(_ match: GKMatch, player: GKPlayer, didChange state: GKPlayerConnectionState) {
@@ -126,11 +129,8 @@ extension GameCenterService: GKLocalPlayerListener {
                         
             if let error = error {
                 print("Error while accept invite: \(error)")
-            } else if let m = match {
-                m.delegate = self
-                //MultiplayerService.shared.startingGame()
-                self.currentMatch = m
-                NotificationCenter.default.post(name: .presentGame, object: m)
+            } else if let match = match {
+                self.startGame(match: match)
             }
         }
     }

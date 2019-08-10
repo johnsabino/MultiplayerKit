@@ -47,7 +47,13 @@ class MultiplayerService: NSObject {
 
 extension MultiplayerService: ReceiveDataDelegate {
     func didReceive(message: Message, from player: GKPlayer) {
+        switch message {
+        case .startGame:
+            print("START GAME")
+        case .send(let position):
+            print("position: \(position)")
         
+        }
     }
     
 }
