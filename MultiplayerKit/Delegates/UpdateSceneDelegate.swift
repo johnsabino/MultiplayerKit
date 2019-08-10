@@ -6,6 +6,6 @@
 //  Copyright © 2019 João Paulo de Oliveira Sabino. All rights reserved.
 //
 
-protocol UpdateSceneDelegate: class {
+public protocol UpdateSceneDelegate: class {
 
 }

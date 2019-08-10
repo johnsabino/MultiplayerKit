@@ -8,7 +8,7 @@
 
 import GameKit
 
-enum Message {
+public enum Message {
     case startGame
     case send(position: CGPoint)
     case sendAttack(hittedPlayers: GKPlayer)

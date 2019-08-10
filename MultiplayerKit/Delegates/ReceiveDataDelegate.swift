@@ -8,6 +8,6 @@
 
 import GameKit
 
-protocol ReceiveDataDelegate: class {
+public protocol ReceiveDataDelegate: class {
     func didReceive(message: Message, from player: GKPlayer)
 }

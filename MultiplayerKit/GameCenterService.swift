@@ -8,7 +8,7 @@
 
 import GameKit
 
-class GameCenterService: NSObject {
+public class GameCenterService: NSObject {
     static let shared = GameCenterService()
     
     var authenticationViewController: UIViewController?
@@ -66,15 +66,15 @@ class GameCenterService: NSObject {
 
 extension GameCenterService: GKMatchmakerViewControllerDelegate {
     
-    func matchmakerViewControllerWasCancelled(_ viewController: GKMatchmakerViewController) {
+    public func matchmakerViewControllerWasCancelled(_ viewController: GKMatchmakerViewController) {
         viewController.dismiss(animated: true)
     }
     
-    func matchmakerViewController(_ viewController: GKMatchmakerViewController, didFailWithError error: Error) {
+    public func matchmakerViewController(_ viewController: GKMatchmakerViewController, didFailWithError error: Error) {
         print("Matchmaker did fail with error: \(error.localizedDescription).")
     }
     
-    func matchmakerViewController(_ viewController: GKMatchmakerViewController, didFind match: GKMatch) {
+    public func matchmakerViewController(_ viewController: GKMatchmakerViewController, didFind match: GKMatch) {
         
         startGame(match: match)
         
@@ -85,7 +85,7 @@ extension GameCenterService: GKMatchmakerViewControllerDelegate {
         
     }
     
-    func startGame(match: GKMatch) {
+    public func startGame(match: GKMatch) {
         self.currentMatch = match
         match.delegate = self
         MultiplayerService.shared.sendData(data: Message.startGame)
@@ -95,7 +95,7 @@ extension GameCenterService: GKMatchmakerViewControllerDelegate {
 }
 
 extension GameCenterService: GKMatchDelegate {
-    func match(_ match: GKMatch, didReceive data: Data, fromRemotePlayer player: GKPlayer) {
+    public func match(_ match: GKMatch, didReceive data: Data, fromRemotePlayer player: GKPlayer) {
         if let dataUnarchived = Message.unarchive(data) {
             receiveDataDelegate?.didReceive(message: dataUnarchived, from: player)
             
@@ -105,7 +105,7 @@ extension GameCenterService: GKMatchDelegate {
         }
     }
     
-    func match(_ match: GKMatch, player: GKPlayer, didChange state: GKPlayerConnectionState) {
+    public func match(_ match: GKMatch, player: GKPlayer, didChange state: GKPlayerConnectionState) {
         if self.currentMatch != match { return }
         
         switch state {
@@ -122,7 +122,7 @@ extension GameCenterService: GKMatchDelegate {
 }
 
 extension GameCenterService: GKLocalPlayerListener {
-    func player(_ player: GKPlayer, didAccept invite: GKInvite) {
+    public func player(_ player: GKPlayer, didAccept invite: GKInvite) {
         
         guard GKLocalPlayer.local.isAuthenticated else {return}
         

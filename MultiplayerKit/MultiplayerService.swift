@@ -8,7 +8,7 @@
 
 import GameKit
 
-class MultiplayerService: NSObject {
+public class MultiplayerService: NSObject {
     //singleton of Multiplayer service
     static let shared = MultiplayerService()
     
@@ -46,12 +46,15 @@ class MultiplayerService: NSObject {
 }
 
 extension MultiplayerService: ReceiveDataDelegate {
-    func didReceive(message: Message, from player: GKPlayer) {
+    public func didReceive(message: Message, from player: GKPlayer) {
+        
         switch message {
         case .startGame:
             print("START GAME")
+        
         case .send(let position):
             print("position: \(position)")
+        
         case .sendAttack(let hittedPlayers):
             print("hittedPlayer: \(hittedPlayers.alias)")
         }
