@@ -17,7 +17,7 @@ enum Message {
     case pressA
     case pressB
     
-    //    //Struct to data
+    //Struct to data
     func archive() -> Data {
         let aaa = self
         print(aaa)

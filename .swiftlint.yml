@@ -1,0 +1,13 @@
+disabled_rules:
+ - trailing_whitespace
+
+opt_in_rules:
+ - force_unwrapping
+ - explicit_self
+
+line_length: 
+  warning: 300
+  error: 350
+
+identifier_name:
+  min_length: 1

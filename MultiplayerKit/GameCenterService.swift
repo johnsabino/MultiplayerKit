@@ -14,28 +14,27 @@ class GameCenterService: NSObject {
     var authenticationViewController: UIViewController?
     var currentMatch: GKMatch?
     var currentMatchmakerVC: GKMatchmakerViewController?
-    var playerConnectedDelegate : PlayerConnectedDelegate?
+    weak var playerConnectedDelegate: PlayerConnectedDelegate?
     
     //var receiveDataDelegate: ReceiveDataDelegate?
-    static var isAuthenticated : Bool {
+    static var isAuthenticated: Bool {
         return GKLocalPlayer.local.isAuthenticated
     }
+    
     override init() {
         super.init()
         
         GKLocalPlayer.local.authenticateHandler = { authenticationVC, error in
             
-            NotificationCenter.default.post(name: .authenticationChanged , object: GKLocalPlayer.local.isAuthenticated)
+            NotificationCenter.default.post(name: .authenticationChanged, object: GKLocalPlayer.local.isAuthenticated)
             
             if GKLocalPlayer.local.isAuthenticated {
                 GKLocalPlayer.local.register(self)
                 print("Authenticated to Game Center!")
                 
-            }
-            else if let vc = authenticationVC {
-                self.authenticationViewController?.present(vc,animated: true)
-            }
-            else{
+            } else if let vc = authenticationVC {
+                self.authenticationViewController?.present(vc, animated: true)
+            } else {
                 print("Error authentication to GameCenter: \(error?.localizedDescription ?? "none")")
             }
             
@@ -43,7 +42,7 @@ class GameCenterService: NSObject {
         
     }
     
-    func presentMatchMaker(){
+    func presentMatchMaker() {
         guard GKLocalPlayer.local.isAuthenticated else {
             return
         }
@@ -65,7 +64,7 @@ class GameCenterService: NSObject {
     }
 }
 
-extension GameCenterService : GKMatchmakerViewControllerDelegate {
+extension GameCenterService: GKMatchmakerViewControllerDelegate {
     
     func matchmakerViewControllerWasCancelled(_ viewController: GKMatchmakerViewController) {
         viewController.dismiss(animated: true)
@@ -98,9 +97,7 @@ extension GameCenterService: GKMatchDelegate {
     }
     
     func match(_ match: GKMatch, player: GKPlayer, didChange state: GKPlayerConnectionState) {
-        if (self.currentMatch != match) {
-            return
-        }
+        if self.currentMatch != match { return }
         
         switch state {
         case GKPlayerConnectionState.connected:
@@ -121,8 +118,10 @@ extension GameCenterService: GKLocalPlayerListener {
         guard GKLocalPlayer.local.isAuthenticated else {return}
         
         GKMatchmaker.shared().match(for: invite) { (match, error) in
-            
-            if let m = match {
+                        
+            if let error = error {
+                print("Error while accept invite: \(error)")
+            } else if let m = match {
                 m.delegate = self
                 //MultiplayerService.shared.startingGame()
                 self.currentMatch = m
@@ -132,6 +131,6 @@ extension GameCenterService: GKLocalPlayerListener {
     }
 }
 
-protocol PlayerConnectedDelegate {
+protocol PlayerConnectedDelegate: class {
     func didPlayerConnected()
 }
