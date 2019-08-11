@@ -9,14 +9,11 @@
 import SpriteKit
 import MultiplayerKit
 
-class Player: MPSpriteNode {
-    
-}
-
+//OBS: a cena do menu deve herdar de MPMenuScene
 class GameScene: MPGameScene {
     var inputController: InputController!
     
-    var player: SKSpriteNode!
+    var player: MPSpriteNode!
     
     override func didMove(to view: SKView) {
         super.didMove(to: view)
@@ -24,15 +21,26 @@ class GameScene: MPGameScene {
         backgroundColor = SKColor.black
         setupCamera()
         setupJoystick()
+        setupPlayers()
         
-        player = Player(color: UIColor.purple, size: CGSize(width: 60, height: 60))
+    }
+    
+    func setupPlayers() {
+        player = MPSpriteNode(color: UIColor.purple, size: CGSize(width: 60, height: 60))
         player.position = CGPoint.zero
         addChild(player)
         
-        otherPlayers.forEach { (gkPlayer) in
-            let player = Player(color: UIColor.purple, size: CGSize(width: 60, height: 60))
-            loadPlayers(id: gkPlayer.playerID, playerNode: player)
+        //OBS: é necessário configuar os outros jogadores para coloca-los na cena
+        otherPlayers.forEach {
+            let player = MPSpriteNode(color: UIColor.purple, size: CGSize(width: 60, height: 60))
+            loadPlayers(id: $0.playerID, playerNode: player)
         }
+    }
+    
+    func setupCamera() {
+        let camera = SKCameraNode()
+        self.camera = camera
+        self.addChild(camera)
     }
     
     func setupJoystick() {
@@ -47,11 +55,6 @@ class GameScene: MPGameScene {
         }
         
     }
-    func setupCamera() {
-        let camera = SKCameraNode()
-        self.camera = camera
-        self.addChild(camera)
-    }
 }
 
 extension GameScene: JoystickDelegate {
@@ -64,12 +67,13 @@ extension GameScene: JoystickDelegate {
     }
     
     func joystickUpdateTracking(direction: CGPoint, angle: CGFloat) {
+        //movimentação local do jogador
         player.position.x += direction.x * 0.1
         player.position.y += direction.y * 0.1
         player.zRotation = -(angle)
-        print("direction: \(direction), angle: \(angle)")
         
-        multiplayer.send(.position(player.position, angle: angle))
+        //OBS: enviar a posição para os outros jogadores
+        //player.sendPosition(withAngle: angle)
     }
     
     func joystickDidEndTracking(direction: CGPoint) {
@@ -88,18 +92,4 @@ extension GameScene: JoystickDelegate {
         
     }
     
-}
-
-// MARK: update scene
-extension GameScene {
-    override func update(playerID: Int, in position: CGPoint, and angle: CGFloat) {
-        super.update(playerID: playerID, in: position, and: angle)
-    }
-}
-
-// MARK: connections
-extension GameScene {
-    override func didPlayerConnected() {
-        
-    }
 }
