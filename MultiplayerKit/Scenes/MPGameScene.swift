@@ -41,8 +41,7 @@ open class MPGameScene: SKScene, UpdateSceneDelegate, ConnectionDelegate {
 extension MPGameScene {
     @objc open func update(playerID: Int, in position: CGPoint, and angle: CGFloat) {
         if let player = allPlayersNode[playerID] {
-            player.position = position
-            player.zRotation = angle
+            player.changePlayer(position: position, angle: angle)
         }
     }
     

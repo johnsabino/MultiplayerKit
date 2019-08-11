@@ -17,7 +17,7 @@ open class MPSpriteNode: SKSpriteNode {
     public override init(texture: SKTexture?, color: UIColor, size: CGSize) {
         super.init(texture: texture, color: color, size: size)
         let updateSprite = CADisplayLink(target: self, selector: #selector(update))
-        updateSprite.preferredFramesPerSecond = 60
+        updateSprite.preferredFramesPerSecond = 20
         updateSprite.add(to: .current, forMode: .default)
     }
     
@@ -36,10 +36,16 @@ open class MPSpriteNode: SKSpriteNode {
         MultiplayerService.shared.send(.position(position, angle: zRotation))
     }
     
+    func changePlayer(position: CGPoint, angle: CGFloat = 0, smoothness: Double = 0.05) {
+        run(SKAction.move(to: position, duration: smoothness))
+        zRotation = angle
+    }
+    
     @objc func update() {
         if playerID == GKLocalPlayer.local.playerID {
             let distance = hypot(position.x - lastPlayerPosition.x, position.y - lastPlayerPosition.y)
-            if distance > 0 {
+            let playerIsMoving = distance > 0
+            if playerIsMoving {
                 sendPosition()
             }
             lastPlayerPosition = position
