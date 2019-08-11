@@ -8,6 +8,7 @@
 
 import SpriteKit
 import MultiplayerKit
+import GameKit
 
 //OBS: a cena do menu deve herdar de MPMenuScene
 class GameScene: MPGameScene {
@@ -26,13 +27,13 @@ class GameScene: MPGameScene {
     }
     
     func setupPlayers() {
-        player = MPSpriteNode(color: UIColor.purple, size: CGSize(width: 60, height: 60))
+        player = MPSpriteNode(playerID: GKLocalPlayer.local.playerID, color: UIColor.purple, size: CGSize(width: 60, height: 60))
         player.position = CGPoint.zero
         addChild(player)
         
         //OBS: é necessário configuar os outros jogadores para coloca-los na cena
         otherPlayers.forEach {
-            let player = MPSpriteNode(color: UIColor.purple, size: CGSize(width: 60, height: 60))
+            let player = MPSpriteNode(playerID: $0.playerID, color: UIColor.purple, size: CGSize(width: 60, height: 60))
             loadPlayers(id: $0.playerID, playerNode: player)
         }
     }
@@ -70,10 +71,8 @@ extension GameScene: JoystickDelegate {
         //movimentação local do jogador
         player.position.x += direction.x * 0.1
         player.position.y += direction.y * 0.1
-        player.zRotation = -(angle)
+        player.zRotation = angle
         
-        //OBS: enviar a posição para os outros jogadores
-        //player.sendPosition(withAngle: angle)
     }
     
     func joystickDidEndTracking(direction: CGPoint) {

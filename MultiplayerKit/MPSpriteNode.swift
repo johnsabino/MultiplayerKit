@@ -21,8 +21,8 @@ open class MPSpriteNode: SKSpriteNode {
         updateSprite.add(to: .current, forMode: .default)
     }
     
-    convenience init(playerID: String, playerAlias: String) {
-        self.init()
+    public convenience init(playerID: String = "", playerAlias: String = "", texture: SKTexture? = nil, color: UIColor, size: CGSize) {
+        self.init(texture: texture, color: color, size: size)
         self.playerID = playerID
         self.playerAlias = playerAlias
         
@@ -32,18 +32,18 @@ open class MPSpriteNode: SKSpriteNode {
         fatalError("init(coder:) has not been implemented")
     }
     
-    public func sendPosition(withAngle angle: CGFloat = 0) {
-        MultiplayerService.shared.send(.position(self.position, angle: angle))
+    public func sendPosition() {
+        MultiplayerService.shared.send(.position(position, angle: zRotation))
     }
     
     @objc func update() {
-
-        let distance = hypot(position.x - lastPlayerPosition.x, position.y - lastPlayerPosition.y)
-        if distance > 0 {
-            print("DISTANCE > 0")
-            sendPosition()
+        if playerID == GKLocalPlayer.local.playerID {
+            let distance = hypot(position.x - lastPlayerPosition.x, position.y - lastPlayerPosition.y)
+            if distance > 0 {
+                sendPosition()
+            }
+            lastPlayerPosition = position
         }
-        lastPlayerPosition = position
     }
     
 }

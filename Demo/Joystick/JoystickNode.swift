@@ -104,7 +104,7 @@ open class JoystickNode: SKNode {
             stick.position = needPosition
             
             direction = needPosition
-            angle = atan2(direction.x, direction.y)
+            angle = -(atan2(direction.x, direction.y))
             
             //joystickDelegate?.joystickDidMoved(direction: needPosition)
         }

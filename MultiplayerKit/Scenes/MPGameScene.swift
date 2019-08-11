@@ -42,7 +42,7 @@ extension MPGameScene {
     @objc open func update(playerID: Int, in position: CGPoint, and angle: CGFloat) {
         if let player = allPlayersNode[playerID] {
             player.position = position
-            player.zRotation = -(angle)
+            player.zRotation = angle
         }
     }
     
