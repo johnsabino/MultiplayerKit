@@ -1,6 +1,6 @@
 //
 //  VirtualButtonNode.swift
-//  PlatformerGame
+//  Demo
 //
 //  Created by João Paulo de Oliveira Sabino on 12/03/19.
 //  Copyright © 2019 João Paulo de Oliveira Sabino. All rights reserved.

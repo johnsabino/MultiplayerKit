@@ -1,9 +1,9 @@
 //
 //  ButtonNode.swift
-//  spritekit-plataform
+//  Demo
 //
 //  Created by João Paulo de Oliveira Sabino on 01/03/19.
-//  Copyright © 2019 Bruno Rocha. All rights reserved.
+//  Copyright © 2019 João Paulo de Oliveira Sabino. All rights reserved.
 //
 
 import SpriteKit
@@ -11,32 +11,35 @@ import SpriteKit
 class ButtonNode: SKSpriteNode {
     
     var actionBlock : (() -> Void)?
-    static let buttonTexture = SKTexture(imageNamed: "button-bg")
     
-    static func makeButton(withText text: String, andSize size: CGSize = CGSize.zero) -> ButtonNode {
-        var buttonNode = ButtonNode(texture: ButtonNode.buttonTexture)
-        
-        if size != CGSize.zero {
-            buttonNode = ButtonNode(texture: ButtonNode.buttonTexture, size: size)
-        }
-        
-        buttonNode.isUserInteractionEnabled = true
-        buttonNode.addChild(buttonNode.createButtonLabel(withText: text))
-        buttonNode.zPosition = 1
-        return buttonNode
+    override init(texture: SKTexture?, color: UIColor, size: CGSize) {
+        super.init(texture: texture, color: color, size: size)
+    
+    }
+    
+    convenience init(text: String, color: UIColor = .gray, size: CGSize = CGSize(width: 150, height: 50)) {
+        self.init(color: color, size: size)
+    
+        isUserInteractionEnabled = true
+        addChild(createButtonLabel(withText: text))
+        zPosition = 1
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     private func createButtonLabel(withText text: String) -> SKLabelNode {
         let label = SKLabelNode(text: text)
-        label.fontName = "Rubik Bold"
+        label.fontName = "Helvetica Bold"
         label.fontColor = .white
-        label.fontSize = 12
+        label.fontSize = 14
         label.position.y = -6
         label.zPosition = 2
         return label
     }
     
-    var isEnabled: Bool = true {
+    var isEnabled: Bool = false {
         didSet {
             alpha = isEnabled ? 1 : 0.4
         }

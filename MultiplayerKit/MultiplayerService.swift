@@ -22,11 +22,7 @@ public class MultiplayerService: NSObject {
     
     //Referência para o jogador e outros jogadores na partida
     private(set) var player = GKLocalPlayer.local
-    var otherPlayers: [GKPlayer] {
-        guard let match = gameCenterService.currentMatch else { return [] }
-        return match.players
-        
-    }
+    
     public weak var updateSceneDelegate: UpdateSceneDelegate?
     
     override public init() {
@@ -34,11 +30,11 @@ public class MultiplayerService: NSObject {
         gameCenterService.receiveDataDelegate = self
     }
     
-    public func sendData(data: Message, sendDataMode: GKMatch.SendDataMode = .reliable) {
+    public func send(_ data: Message, sendDataMode: GKMatch.SendDataMode = .reliable) {
         
         do {
-            let dataArchived = data.archive()
-            try GameCenterService.shared.currentMatch?.sendData(toAllPlayers: dataArchived, with: sendDataMode)
+            let dataArchived = Message.archive(data)
+            try gameCenterService.currentMatch?.sendData(toAllPlayers: dataArchived, with: sendDataMode)
         } catch {
             print("Error while archive data: \(error)")
         }
@@ -51,11 +47,9 @@ extension MultiplayerService: ReceiveDataDelegate {
         switch message {
         case .startGame:
             print("START GAME")
-        
-        case .send(let position):
-            print("position: \(position)")
-        
-        case .sendAttack(let hittedPlayers):
+        case .position(let position, let angle):
+            updateSceneDelegate?.update(playerID: player.playerID.intValue, in: position, and: angle)
+        case .attack(let hittedPlayers):
             print("hittedPlayer: \(hittedPlayers.alias)")
         }
     }

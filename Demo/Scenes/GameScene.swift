@@ -9,22 +9,30 @@
 import SpriteKit
 import MultiplayerKit
 
-class GameScene: SKScene {
+class Player: MPSpriteNode {
+    
+}
+
+class GameScene: MPGameScene {
     var inputController: InputController!
     
     var player: SKSpriteNode!
-    var multiplayer = MultiplayerService()
     
     override func didMove(to view: SKView) {
-        
-        multiplayer.updateSceneDelegate = self
+        super.didMove(to: view)
+
         backgroundColor = SKColor.black
         setupCamera()
         setupJoystick()
         
-        player = SKSpriteNode(color: UIColor.purple, size: CGSize(width: 60, height: 60))
+        player = Player(color: UIColor.purple, size: CGSize(width: 60, height: 60))
         player.position = CGPoint.zero
         addChild(player)
+        
+        otherPlayers.forEach { (gkPlayer) in
+            let player = Player(color: UIColor.purple, size: CGSize(width: 60, height: 60))
+            loadPlayers(id: gkPlayer.playerID, playerNode: player)
+        }
     }
     
     func setupJoystick() {
@@ -61,7 +69,7 @@ extension GameScene: JoystickDelegate {
         player.zRotation = -(angle)
         print("direction: \(direction), angle: \(angle)")
         
-        multiplayer.sendData(data: .send(position: direction))
+        multiplayer.send(.position(player.position, angle: angle))
     }
     
     func joystickDidEndTracking(direction: CGPoint) {
@@ -84,8 +92,8 @@ extension GameScene: JoystickDelegate {
 
 // MARK: update scene
 extension GameScene {
-    override func update(playerPosition: CGPoint, angle: CGFloat) {
-        
+    override func update(playerID: Int, in position: CGPoint, and angle: CGFloat) {
+        super.update(playerID: playerID, in: position, and: angle)
     }
 }
 

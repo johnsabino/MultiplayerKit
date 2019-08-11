@@ -14,7 +14,7 @@ public class GameCenterService: NSObject {
     public var authenticationViewController: UIViewController?
     public var currentMatch: GKMatch?
     var currentMatchmakerVC: GKMatchmakerViewController?
-    weak var connectionDelegate: ConnectionDelegate?
+    public weak var connectionDelegate: ConnectionDelegate?
     weak var receiveDataDelegate: ReceiveDataDelegate?
     
     static var isAuthenticated: Bool {
@@ -42,16 +42,16 @@ public class GameCenterService: NSObject {
         
     }
     
-    func presentMatchMaker() {
+    public func presentMatchMaker() {
         guard GKLocalPlayer.local.isAuthenticated else {
             return
         }
-        
+    
         let request = GKMatchRequest()
         
-        request.minPlayers = 2
-        request.maxPlayers = 2
-        request.defaultNumberOfPlayers = 2
+        request.minPlayers = MultiplayerService.shared.matchMinPlayers
+        request.maxPlayers = MultiplayerService.shared.matchMaxPlayers
+        request.defaultNumberOfPlayers = MultiplayerService.shared.defaultNumberOfPlayers
         
         request.inviteMessage = "Would you like to play?"
         
@@ -88,7 +88,7 @@ extension GameCenterService: GKMatchmakerViewControllerDelegate {
     public func startGame(match: GKMatch) {
         self.currentMatch = match
         match.delegate = self
-        MultiplayerService.shared.sendData(data: Message.startGame)
+        MultiplayerService.shared.send(.startGame)
         NotificationCenter.default.post(name: .presentGame, object: match)
     }
     
@@ -124,15 +124,15 @@ extension GameCenterService: GKMatchDelegate {
 extension GameCenterService: GKLocalPlayerListener {
     public func player(_ player: GKPlayer, didAccept invite: GKInvite) {
         
-        guard GKLocalPlayer.local.isAuthenticated else {return}
-        
-        GKMatchmaker.shared().match(for: invite) { (match, error) in
-                        
-            if let error = error {
-                print("Error while accept invite: \(error)")
-            } else if let match = match {
-                self.startGame(match: match)
-            }
-        }
+//        guard GKLocalPlayer.local.isAuthenticated else {return}
+//        
+//        GKMatchmaker.shared().match(for: invite) { (match, error) in
+//                        
+//            if let error = error {
+//                print("Error while accept invite: \(error)")
+//            } else if let match = match {
+//                self.startGame(match: match)
+//            }
+//        }
     }
 }

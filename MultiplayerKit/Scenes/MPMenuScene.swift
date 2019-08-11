@@ -11,13 +11,13 @@ import GameKit
 
 open class MPMenuScene: SKScene {
     
-    var multiplayerGameScene: SKScene!
+    var multiplayerGameScene: MPGameScene!
     
     // MARK: Inits
     override public init(size: CGSize) {
         super.init(size: size)
     }
-    convenience public init(multiplayerGameScene: SKScene) {
+    convenience public init(multiplayerGameScene: MPGameScene) {
         self.init(size: multiplayerGameScene.size)
         self.multiplayerGameScene = multiplayerGameScene
     }

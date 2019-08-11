@@ -6,6 +6,6 @@
 //  Copyright © 2019 João Paulo de Oliveira Sabino. All rights reserved.
 //
 
-protocol ConnectionDelegate: class {
+public protocol ConnectionDelegate: class {
     func didPlayerConnected()
 }

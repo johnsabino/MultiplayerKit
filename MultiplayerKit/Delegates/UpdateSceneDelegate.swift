@@ -8,5 +8,5 @@
 import GameKit
 
 public protocol UpdateSceneDelegate: class {
-    func update(playerPosition: CGPoint, angle: CGFloat)
+    func update(playerID: Int, in position: CGPoint, and angle: CGFloat)
 }

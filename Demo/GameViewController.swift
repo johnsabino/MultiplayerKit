@@ -17,16 +17,16 @@ class GameViewController: UIViewController {
         super.viewDidLoad()
         
         if let skView = view as? SKView {
-            let scene = MenuScene(multiplayerGameScene: GameScene())
+            let scene = MenuScene(multiplayerGameScene: GameScene(size: view.frame.size))
             scene.anchorPoint = CGPoint(x: 0.5, y: 0.5)
             scene.scaleMode = .resizeFill
             skView.presentScene(scene)
-            
+
             skView.showsFPS = true
             skView.showsNodeCount = true
             skView.ignoresSiblingOrder = true
             //skView.showsPhysics = true
-            
+
             GameCenterService.shared.authenticationViewController = self
         }
        

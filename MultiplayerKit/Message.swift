@@ -8,15 +8,21 @@
 
 import GameKit
 
+public enum MessageType {
+    case startGame
+    case send
+    case sendAttack(hittedPlayers: GKPlayer)
+}
+
 public enum Message {
     case startGame
-    case send(position: CGPoint)
-    case sendAttack(hittedPlayers: GKPlayer)
+    case position(CGPoint, angle: CGFloat)
+    case attack(hittedPlayers: GKPlayer)
     
     //Struct to data
-    func archive() -> Data {
-        var data = self
-        return Data(bytes: &data, count: MemoryLayout.stride(ofValue: data))
+    static func archive(_ data: Message) -> Data {
+        var d = data
+        return Data(bytes: &d, count: MemoryLayout.stride(ofValue: d))
     }
     
     //Data to struct
