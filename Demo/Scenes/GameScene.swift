@@ -59,14 +59,6 @@ class GameScene: MPGameScene {
 }
 
 extension GameScene: JoystickDelegate {
-    func joystickDidStartTracking() {
-        
-    }
-    
-    func joystickDidMoved(direction: CGPoint) {
-        
-    }
-    
     func joystickUpdateTracking(direction: CGPoint, angle: CGFloat) {
         //movimentação local do jogador
         player.position.x += direction.x * 0.1
@@ -74,21 +66,4 @@ extension GameScene: JoystickDelegate {
         player.zRotation = angle
         
     }
-    
-    func joystickDidEndTracking(direction: CGPoint) {
-        
-    }
-    
-    func joystickDidTapButtonA() {
-        
-    }
-    
-    func joystickDidTapButtonB() {
-        
-    }
-    
-    func joystickDidTapDown() {
-        
-    }
-    
 }

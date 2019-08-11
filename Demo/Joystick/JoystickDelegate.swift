@@ -40,3 +40,13 @@ protocol JoystickDelegate: class {
     func joystickDidTapButtonB()
     func joystickDidTapDown()
 }
+
+extension JoystickDelegate {
+    func joystickDidStartTracking() {}
+    func joystickDidMoved(direction: CGPoint) {}
+    func joystickUpdateTracking(direction: CGPoint, angle: CGFloat) {}
+    func joystickDidEndTracking(direction: CGPoint) {}
+    func joystickDidTapButtonA() {}
+    func joystickDidTapButtonB() {}
+    func joystickDidTapDown() {}
+}
