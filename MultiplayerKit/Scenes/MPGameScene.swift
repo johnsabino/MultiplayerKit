@@ -34,21 +34,26 @@ open class MPGameScene: SKScene {
     
     override open func didMove(to view: SKView) {
         super.didMove(to: view)
-        multiplayer.updateSceneDelegate = self
+        GameCenterService.shared.receiveDataDelegate = self
     }
 }
 
 // MARK: - UpdateSceneDelegate
-extension MPGameScene: UpdateSceneDelegate {
-    @objc open func update(playerID: Int, in position: CGPoint, and angle: CGFloat) {
-        if let player = allPlayersNode[playerID] {
-            player.changePlayer(position: position, angle: angle)
+extension MPGameScene: ReceiveDataDelegate {
+    @objc open func didReceive(message: Message, from player: GKPlayer) {
+        //Did receive position
+        if let position = message["position"] as? [CGFloat],
+           let player = allPlayersNode[player.playerID.intValue] {
+            
+                player.changePlayer(position: CGPoint(x: position[0], y: position[1]), angle: position[2])
         }
     }
+
 }
 // MARK: - ConnectionDelegate
 extension MPGameScene: ConnectionDelegate {
     @objc open func didPlayerConnected() {
         
     }
+    
 }

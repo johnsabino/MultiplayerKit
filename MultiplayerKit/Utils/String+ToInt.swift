@@ -7,7 +7,7 @@
 //
 import GameKit
 
-extension String {
+public extension String {
     var intValue: Int {
         if let intValue = Int(self.components(separatedBy: CharacterSet.decimalDigits.inverted).joined()) {
             return intValue

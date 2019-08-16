@@ -86,7 +86,7 @@ extension GameCenterService: GKMatchmakerViewControllerDelegate {
     public func startGame(match: GKMatch) {
         self.currentMatch = match
         match.delegate = self
-        MultiplayerService.shared.send(.startGame)
+        MultiplayerService.shared.send(["startGame": "startGame"])
         NotificationCenter.default.post(name: .presentGame, object: match)
     }
     
@@ -94,13 +94,17 @@ extension GameCenterService: GKMatchmakerViewControllerDelegate {
 
 extension GameCenterService: GKMatchDelegate {
     public func match(_ match: GKMatch, didReceive data: Data, fromRemotePlayer player: GKPlayer) {
-        if let dataUnarchived = Message.unarchive(data) {
-            receiveDataDelegate?.didReceive(message: dataUnarchived, from: player)
-            
-            if case .startGame = dataUnarchived {
-                print("START GAME 2")
+
+            do {
+                if let dataUnarchived = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? Message {
+                
+                    receiveDataDelegate?.didReceive(message: dataUnarchived, from: player)
+                }
+            } catch {
+                print("Error while tryng to unarchive data: \(error)")
             }
-        }
+            
+        //}
     }
     
     public func match(_ match: GKMatch, player: GKPlayer, didChange state: GKPlayerConnectionState) {

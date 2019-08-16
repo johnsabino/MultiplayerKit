@@ -8,7 +8,9 @@
 
 import GameKit
 
-public class MultiplayerService: NSObject {
+public typealias Message = [String: Any]
+
+open class MultiplayerService: NSObject {
     //singleton of Multiplayer service
     public static let shared = MultiplayerService()
     
@@ -23,35 +25,18 @@ public class MultiplayerService: NSObject {
     //Referência para o jogador e outros jogadores na partida
     private(set) var player = GKLocalPlayer.local
     
-    public weak var updateSceneDelegate: UpdateSceneDelegate?
-    
     override public init() {
         super.init()
-        gameCenterService.receiveDataDelegate = self
+//        gameCenterService.receiveDataDelegate = self
     }
     
-    public func send(_ data: Message, sendDataMode: GKMatch.SendDataMode = .reliable) {
+    public func send(_ data: [String: Any], sendDataMode: GKMatch.SendDataMode = .reliable) {
         
         do {
-            let dataArchived = Message.archive(data)
+            let dataArchived: Data = try NSKeyedArchiver.archivedData(withRootObject: data, requiringSecureCoding: false)
             try gameCenterService.currentMatch?.sendData(toAllPlayers: dataArchived, with: sendDataMode)
         } catch {
             print("Error while archive data: \(error)")
         }
     }
-}
-
-extension MultiplayerService: ReceiveDataDelegate {
-    public func didReceive(message: Message, from player: GKPlayer) {
-        
-        switch message {
-        case .startGame:
-            print("START GAME")
-        case .position(let position, let angle):
-            updateSceneDelegate?.update(playerID: player.playerID.intValue, in: position, and: angle)
-        case .attack(let hittedPlayers):
-            print("hittedPlayer: \(hittedPlayers.alias)")
-        }
-    }
-    
 }

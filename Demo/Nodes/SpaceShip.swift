@@ -15,6 +15,8 @@ class SpaceShip: MPSpriteNode {
     override init(gkPlayer: GKPlayer, texture: SKTexture? = nil, color: UIColor, size: CGSize) {
         super.init(gkPlayer: gkPlayer, texture: texture, color: color, size: size)
         
+        zPosition = 2
+        
         let pb = SKPhysicsBody(rectangleOf: size)
         pb.affectedByGravity = false
         pb.isDynamic = true
@@ -38,6 +40,8 @@ class SpaceShip: MPSpriteNode {
             bullet.removeFromParent()
         }
         
+        //OBS: precisa enviar a mensagem de ataque
+        send(message: ["attack": 0])
     }
     
     func instantiateBullet() -> SKSpriteNode {

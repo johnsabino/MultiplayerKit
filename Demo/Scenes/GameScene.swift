@@ -75,3 +75,15 @@ extension GameScene: JoystickDelegate {
         player.shoot(in: self)
     }
 }
+
+extension GameScene {
+    override func didReceive(message: Message, from player: GKPlayer) {
+        super.didReceive(message: message, from: player)
+        
+        if message["attack"] != nil {
+            if let player = allPlayersNode[player.playerID.intValue] as? SpaceShip {
+                player.shoot(in: self)
+            }
+        }
+    }
+}

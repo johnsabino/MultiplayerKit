@@ -12,6 +12,10 @@ import GameKit
 open class MPSpriteNode: SKSpriteNode {
     var gkPlayer: GKPlayer
     var canSendPosition = true
+    public var isLocalPlayer: Bool {
+        return gkPlayer == GKLocalPlayer.local
+    }
+    public var mpKit = MultiplayerService.shared
     private var lastPlayerPosition = CGPoint.zero
     
     public init(gkPlayer: GKPlayer, texture: SKTexture? = nil, color: UIColor, size: CGSize) {
@@ -28,8 +32,12 @@ open class MPSpriteNode: SKSpriteNode {
         fatalError("init(coder:) has not been implemented")
     }
     
+    public func send(message: [String: Any]) {
+        if isLocalPlayer { mpKit.send(message) }
+    }
+    
     public func sendPosition() {
-        MultiplayerService.shared.send(.position(position, angle: zRotation))
+        send(message: ["position": [position.x, position.y, zRotation]])
     }
     
     func changePlayer(position: CGPoint, angle: CGFloat = 0, smoothness: Double = 0.05) {
@@ -38,7 +46,7 @@ open class MPSpriteNode: SKSpriteNode {
     }
     
     @objc func update() {
-        if gkPlayer == GKLocalPlayer.local && canSendPosition {
+        if isLocalPlayer && canSendPosition {
             let distance = hypot(position.x - lastPlayerPosition.x, position.y - lastPlayerPosition.y)
             let playerIsMoving = distance > 0
             if playerIsMoving {
