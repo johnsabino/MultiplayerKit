@@ -15,7 +15,7 @@ class GameScene: MPGameScene {
     var inputController: InputController!
     
     //OBS: o player deve herdar de MPSpriteNode
-    var player: MPSpriteNode!
+    var player: SpaceShip!
     
     override func didMove(to view: SKView) {
         super.didMove(to: view)
@@ -28,13 +28,13 @@ class GameScene: MPGameScene {
     }
     
     func setupPlayers() {
-        player = MPSpriteNode(gkPlayer: GKLocalPlayer.local, color: UIColor.purple, size: CGSize(width: 60, height: 60))
+        player = SpaceShip(gkPlayer: GKLocalPlayer.local, color: UIColor.purple, size: CGSize(width: 60, height: 60))
         player.position = CGPoint.zero
         addChild(player)
         
         //OBS: é necessário configuar os outros jogadores para coloca-los na cena
         otherPlayers.forEach {
-            let player = MPSpriteNode(gkPlayer: $0, color: UIColor.purple, size: CGSize(width: 60, height: 60))
+            let player = SpaceShip(gkPlayer: $0, color: UIColor.purple, size: CGSize(width: 60, height: 60))
             loadPlayers(id: $0.playerID, playerNode: player)
         }
     }
@@ -62,9 +62,16 @@ class GameScene: MPGameScene {
 extension GameScene: JoystickDelegate {
     func joystickUpdateTracking(direction: CGPoint, angle: CGFloat) {
         //movimentação local do jogador
-        player.position.x += direction.x * 0.1
-        player.position.y += direction.y * 0.1
+        
+        player.physicsBody?.velocity = CGVector(dx: direction.x * 3, dy: direction.y * 3)
         player.zRotation = angle
         
+    }
+    func joystickDidEndTracking(direction: CGPoint) {
+        player.physicsBody?.velocity = CGVector.zero
+    }
+    
+    func joystickDidTapButtonA() {
+        player.shoot(in: self)
     }
 }

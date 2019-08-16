@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6C0486EC23071BA7009A888C /* SpaceShip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C0486EB23071BA7009A888C /* SpaceShip.swift */; };
+		6C0486EE23071CF9009A888C /* PhysicsDetection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C0486ED23071CF9009A888C /* PhysicsDetection.swift */; };
 		6C6EEAF922FF3CBA00996FC8 /* JoystickNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C6EEAF422FF3CBA00996FC8 /* JoystickNode.swift */; };
 		6C6EEAFA22FF3CBA00996FC8 /* VirtualButtonNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C6EEAF522FF3CBA00996FC8 /* VirtualButtonNode.swift */; };
 		6C6EEAFB22FF3CBA00996FC8 /* InputController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C6EEAF622FF3CBA00996FC8 /* InputController.swift */; };
@@ -73,6 +75,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		6C0486EB23071BA7009A888C /* SpaceShip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpaceShip.swift; sourceTree = "<group>"; };
+		6C0486ED23071CF9009A888C /* PhysicsDetection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysicsDetection.swift; sourceTree = "<group>"; };
 		6C6EEAF422FF3CBA00996FC8 /* JoystickNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JoystickNode.swift; sourceTree = "<group>"; };
 		6C6EEAF522FF3CBA00996FC8 /* VirtualButtonNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VirtualButtonNode.swift; sourceTree = "<group>"; };
 		6C6EEAF622FF3CBA00996FC8 /* InputController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputController.swift; sourceTree = "<group>"; };
@@ -136,6 +140,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6C0486E923071B4A009A888C /* MPNodes */ = {
+			isa = PBXGroup;
+			children = (
+				6CA83ABF22FF9057004C912A /* MPSpriteNode.swift */,
+			);
+			path = MPNodes;
+			sourceTree = "<group>";
+		};
+		6C0486EA23071B61009A888C /* Nodes */ = {
+			isa = PBXGroup;
+			children = (
+				6C0486EB23071BA7009A888C /* SpaceShip.swift */,
+			);
+			path = Nodes;
+			sourceTree = "<group>";
+		};
 		6C6EEAF322FF3CBA00996FC8 /* Joystick */ = {
 			isa = PBXGroup;
 			children = (
@@ -192,7 +212,7 @@
 		6C99F96822FC99ED00B8C80B /* MultiplayerKit */ = {
 			isa = PBXGroup;
 			children = (
-				6CA83ABF22FF9057004C912A /* MPSpriteNode.swift */,
+				6C0486E923071B4A009A888C /* MPNodes */,
 				6C6EEB7A22FF4FFB00996FC8 /* Scenes */,
 				6C99F96922FC99ED00B8C80B /* MultiplayerKit.h */,
 				6C99F96A22FC99ED00B8C80B /* Info.plist */,
@@ -217,6 +237,7 @@
 		6C99F98522FC9A0B00B8C80B /* Demo */ = {
 			isa = PBXGroup;
 			children = (
+				6C0486EA23071B61009A888C /* Nodes */,
 				6C6EEAF322FF3CBA00996FC8 /* Joystick */,
 				6C6EEB0F22FF477E00996FC8 /* Scenes */,
 				6C99F98622FC9A0B00B8C80B /* AppDelegate.swift */,
@@ -225,6 +246,7 @@
 				6C99F99322FC9A0C00B8C80B /* Assets.xcassets */,
 				6C99F99522FC9A0C00B8C80B /* LaunchScreen.storyboard */,
 				6C99F99822FC9A0C00B8C80B /* Info.plist */,
+				6C0486ED23071CF9009A888C /* PhysicsDetection.swift */,
 			);
 			path = Demo;
 			sourceTree = "<group>";
@@ -480,6 +502,8 @@
 				6C99F98F22FC9A0B00B8C80B /* GameViewController.swift in Sources */,
 				6C99F98722FC9A0B00B8C80B /* AppDelegate.swift in Sources */,
 				6C6EEB0622FF3F8900996FC8 /* UpdateSceneDelegate.swift in Sources */,
+				6C0486EC23071BA7009A888C /* SpaceShip.swift in Sources */,
+				6C0486EE23071CF9009A888C /* PhysicsDetection.swift in Sources */,
 				6C6EEB1122FF479C00996FC8 /* MenuScene.swift in Sources */,
 				6C6EEAF922FF3CBA00996FC8 /* JoystickNode.swift in Sources */,
 			);
