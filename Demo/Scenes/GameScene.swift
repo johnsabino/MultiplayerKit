@@ -14,6 +14,7 @@ import GameKit
 class GameScene: MPGameScene {
     var inputController: InputController!
     
+    //OBS: o player deve herdar de MPSpriteNode
     var player: MPSpriteNode!
     
     override func didMove(to view: SKView) {
@@ -27,13 +28,13 @@ class GameScene: MPGameScene {
     }
     
     func setupPlayers() {
-        player = MPSpriteNode(playerID: GKLocalPlayer.local.playerID, color: UIColor.purple, size: CGSize(width: 60, height: 60))
+        player = MPSpriteNode(gkPlayer: GKLocalPlayer.local, color: UIColor.purple, size: CGSize(width: 60, height: 60))
         player.position = CGPoint.zero
         addChild(player)
         
         //OBS: é necessário configuar os outros jogadores para coloca-los na cena
         otherPlayers.forEach {
-            let player = MPSpriteNode(playerID: $0.playerID, color: UIColor.purple, size: CGSize(width: 60, height: 60))
+            let player = MPSpriteNode(gkPlayer: $0, color: UIColor.purple, size: CGSize(width: 60, height: 60))
             loadPlayers(id: $0.playerID, playerNode: player)
         }
     }

@@ -17,7 +17,7 @@ public class GameCenterService: NSObject {
     public weak var connectionDelegate: ConnectionDelegate?
     weak var receiveDataDelegate: ReceiveDataDelegate?
     
-    static var isAuthenticated: Bool {
+    var isAuthenticated: Bool {
         return GKLocalPlayer.local.isAuthenticated
     }
     
@@ -43,10 +43,8 @@ public class GameCenterService: NSObject {
     }
     
     public func presentMatchMaker() {
-        guard GKLocalPlayer.local.isAuthenticated else {
-            return
-        }
-    
+        if !isAuthenticated {return}
+
         let request = GKMatchRequest()
         
         request.minPlayers = MultiplayerService.shared.matchMinPlayers

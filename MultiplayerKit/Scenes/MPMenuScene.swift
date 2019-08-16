@@ -34,9 +34,7 @@ open class MPMenuScene: SKScene {
     }
     
     @objc open func authenticationChanged(_ notification: Notification) {
-//        if let isConnected = notification.object as? Bool {
-//            self.startButton.isEnabled = isConnected
-//        }
+        
     }
     
     @objc open func presentGame(_ notification: Notification) {

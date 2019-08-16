@@ -48,23 +48,18 @@ class ButtonNode: SKSpriteNode {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
         
-        guard isEnabled else {
-            return
-        }
-        
+        if !isEnabled { return } 
         self.run(SKAction.fadeAlpha(to: 0.2, duration: 0.1))
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesEnded(touches, with: event)
         
-        if let block = actionBlock, isEnabled {
+        if !isEnabled { return }
+        if let block = actionBlock {
             block()
         }
-        guard isEnabled else {
-            return
-        }
-        
         self.run(SKAction.fadeAlpha(to: 1, duration: 0.2))
     }
+
 }

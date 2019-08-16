@@ -12,11 +12,13 @@ import MultiplayerKit
 
 //OBS: a cena do menu deve herdar de MPMenuScene
 class MenuScene: MPMenuScene {
+    
     var startButton: ButtonNode!
+    var trainingButton: ButtonNode!
     
     override func authenticationChanged(_ notification: Notification) {
         if let isConnected = notification.object as? Bool {
-            self.startButton.isEnabled = isConnected
+            startButton.isEnabled = isConnected
         }
     }
     
@@ -27,12 +29,21 @@ class MenuScene: MPMenuScene {
     }
     
     func setupButtons() {
-        self.startButton = ButtonNode(text: "START GAME")
-        self.startButton.position.y = -30
-        self.startButton.actionBlock = {
+        //StartButton
+        startButton = ButtonNode(text: "START GAME")
+        startButton.position.y = -30
+        startButton.actionBlock = {
             GameCenterService.shared.presentMatchMaker()
         }
-        
         addChild(startButton)
+        
+        //TrainingButton
+        trainingButton = ButtonNode(text: "TRAINING MODE")
+        trainingButton.isEnabled = true
+        trainingButton.position.y = -100
+        trainingButton.actionBlock = {
+            GameCenterService.shared.startGame(match: GKMatch())
+        }
+        addChild(trainingButton)
     }
 }

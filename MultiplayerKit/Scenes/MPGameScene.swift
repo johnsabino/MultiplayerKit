@@ -9,7 +9,7 @@
 import SpriteKit
 import GameKit
 
-open class MPGameScene: SKScene, UpdateSceneDelegate, ConnectionDelegate {
+open class MPGameScene: SKScene {
     
     public var allPlayersNode: [Int: MPSpriteNode] = [:]
     
@@ -38,15 +38,17 @@ open class MPGameScene: SKScene, UpdateSceneDelegate, ConnectionDelegate {
     }
 }
 
-extension MPGameScene {
+// MARK: - UpdateSceneDelegate
+extension MPGameScene: UpdateSceneDelegate {
     @objc open func update(playerID: Int, in position: CGPoint, and angle: CGFloat) {
         if let player = allPlayersNode[playerID] {
             player.changePlayer(position: position, angle: angle)
         }
     }
-    
+}
+// MARK: - ConnectionDelegate
+extension MPGameScene: ConnectionDelegate {
     @objc open func didPlayerConnected() {
         
     }
-    
 }

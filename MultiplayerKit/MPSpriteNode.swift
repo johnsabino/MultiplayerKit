@@ -10,22 +10,18 @@ import SpriteKit
 import GameKit
 
 open class MPSpriteNode: SKSpriteNode {
-    var playerID: String = ""
-    var playerAlias: String = ""
+    var gkPlayer: GKPlayer
+    var canSendPosition = true
     private var lastPlayerPosition = CGPoint.zero
     
-    public override init(texture: SKTexture?, color: UIColor, size: CGSize) {
+    public init(gkPlayer: GKPlayer, texture: SKTexture? = nil, color: UIColor, size: CGSize) {
+        self.gkPlayer = gkPlayer
         super.init(texture: texture, color: color, size: size)
+        
         let updateSprite = CADisplayLink(target: self, selector: #selector(update))
         updateSprite.preferredFramesPerSecond = 20
         updateSprite.add(to: .current, forMode: .default)
-    }
-    
-    public convenience init(playerID: String = "", playerAlias: String = "", texture: SKTexture? = nil, color: UIColor, size: CGSize) {
-        self.init(texture: texture, color: color, size: size)
-        self.playerID = playerID
-        self.playerAlias = playerAlias
-        
+
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -42,7 +38,7 @@ open class MPSpriteNode: SKSpriteNode {
     }
     
     @objc func update() {
-        if playerID == GKLocalPlayer.local.playerID {
+        if gkPlayer == GKLocalPlayer.local && canSendPosition {
             let distance = hypot(position.x - lastPlayerPosition.x, position.y - lastPlayerPosition.y)
             let playerIsMoving = distance > 0
             if playerIsMoving {
