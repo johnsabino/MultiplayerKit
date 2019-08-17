@@ -9,21 +9,24 @@
 import SpriteKit
 
 struct ColliderType {
-    static let none: UInt32 = UInt32.min // collide with all
-    static let all: UInt32 = UInt32.max // collide with all
-    static let player: UInt32 = 0x1 << 0 // 000000001 = 1
-    static let bullet: UInt32 = 0x1 << 1 // 000000010 = 2 // 000000100 = 4
+    static let none: UInt32 = UInt32.min 
+    static let all: UInt32 = UInt32.max
+    static let player: UInt32 = 0x1 << 0
+    static let enemy: UInt32 = 0x1 << 1
+    static let bullet: UInt32 = 0x1 << 2
+    static let enemyBullet: UInt32 = 0x1 << 3
 }
 
 class PhysicsDetection: NSObject, SKPhysicsContactDelegate {
     //var player: CharacterNode?
     
     func didBegin(_ contact: SKPhysicsContact) {
+        print("COLISAO GENERICA")
         
         let collision: UInt32 = contact.bodyA.categoryBitMask | contact.bodyB.categoryBitMask
     
         if collision == ColliderType.player | ColliderType.bullet {
-            
+            print("COLIDIU")
         }
         
         if collision == ColliderType.player | ColliderType.player {

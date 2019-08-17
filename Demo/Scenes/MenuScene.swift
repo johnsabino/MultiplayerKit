@@ -42,7 +42,16 @@ class MenuScene: MPMenuScene {
         trainingButton.isEnabled = true
         trainingButton.position.y = -100
         trainingButton.actionBlock = {
-            GameCenterService.shared.startGame(match: GKMatch())
+            guard let view = self.view else {return}
+            let gameScene = GameScene(size: view.frame.size)
+            gameScene.isTraining = true
+            gameScene.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+            gameScene.scaleMode = .resizeFill
+            gameScene.view?.showsPhysics = true
+            gameScene.view?.ignoresSiblingOrder = true
+            
+            // Present the scene
+            view.presentScene(gameScene, transition: SKTransition.crossFade(withDuration: 1.0))
         }
         addChild(trainingButton)
     }

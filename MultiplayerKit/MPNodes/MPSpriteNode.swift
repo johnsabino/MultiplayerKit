@@ -10,12 +10,11 @@ import SpriteKit
 import GameKit
 
 open class MPSpriteNode: SKSpriteNode {
-    var gkPlayer: GKPlayer
-    var canSendPosition = true
+    public var gkPlayer: GKPlayer
     public var isLocalPlayer: Bool {
         return gkPlayer == GKLocalPlayer.local
     }
-    public var mpKit = MultiplayerService.shared
+    
     private var lastPlayerPosition = CGPoint.zero
     
     public init(gkPlayer: GKPlayer, texture: SKTexture? = nil, color: UIColor, size: CGSize) {
@@ -46,7 +45,7 @@ open class MPSpriteNode: SKSpriteNode {
     }
     
     @objc func update() {
-        if isLocalPlayer && canSendPosition {
+        if isLocalPlayer {
             let distance = hypot(position.x - lastPlayerPosition.x, position.y - lastPlayerPosition.y)
             let playerIsMoving = distance > 0
             if playerIsMoving {

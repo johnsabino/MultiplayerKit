@@ -13,30 +13,37 @@ import GameKit
 //OBS: a cena do menu deve herdar de MPMenuScene
 class GameScene: MPGameScene {
     var inputController: InputController!
-    
+    var isTraining = false
     //OBS: o player deve herdar de MPSpriteNode
     var player: SpaceShip!
     
     override func didMove(to view: SKView) {
         super.didMove(to: view)
 
-        backgroundColor = SKColor.black
+        backgroundColor = .white
         setupCamera()
         setupJoystick()
         setupPlayers()
-        
+    
+        physicsWorld.contactDelegate = self
     }
     
     func setupPlayers() {
-        player = SpaceShip(gkPlayer: GKLocalPlayer.local, color: UIColor.purple, size: CGSize(width: 60, height: 60))
+        player = SpaceShip(gkPlayer: GKLocalPlayer.local, color: .purple, size: CGSize(width: 60, height: 60))
         player.position = CGPoint.zero
         addChild(player)
         
         //OBS: é necessário configuar os outros jogadores para coloca-los na cena
         otherPlayers.forEach {
-            let player = SpaceShip(gkPlayer: $0, color: UIColor.purple, size: CGSize(width: 60, height: 60))
+            let player = SpaceShip(gkPlayer: $0, color: .purple, size: CGSize(width: 60, height: 60))
             loadPlayers(id: $0.playerID, playerNode: player)
         }
+        
+//        if isTraining {
+//            let player2 = SpaceShip(gkPlayer: GKPlayer(), color: .purple, size: CGSize(width: 60, height: 60))
+//            player2.position = CGPoint.zero
+//            addChild(player2)
+//        }
     }
     
     func setupCamera() {
@@ -79,11 +86,44 @@ extension GameScene: JoystickDelegate {
 extension GameScene {
     override func didReceive(message: Message, from player: GKPlayer) {
         super.didReceive(message: message, from: player)
+        guard let player = allPlayersNode[player.playerID.intValue] as? SpaceShip else { return }
         
-        if message["attack"] != nil {
-            if let player = allPlayersNode[player.playerID.intValue] as? SpaceShip {
+        if let action = message["action"] as? String {
+            switch action {
+            case "attack":
                 player.shoot(in: self)
+            case "hitted":
+                player.receiveDamage()
+            default:
+                break
             }
         }
+    }
+}
+
+extension GameScene: SKPhysicsContactDelegate {
+    func didBegin(_ contact: SKPhysicsContact) {
+        let categoryA = contact.bodyA.categoryBitMask
+        let categoryB = contact.bodyB.categoryBitMask
+        
+        let nodeA = contact.bodyA.node
+        let nodeB = contact.bodyB.node
+        
+        let collision: UInt32 = categoryA | categoryB
+        
+        if collision == ColliderType.player | ColliderType.bullet {
+            
+            guard let playerNode = (categoryA == ColliderType.player ? nodeA : nodeB) as? SpaceShip else { return }
+            guard let bulletNode = categoryA == ColliderType.bullet ? nodeA : nodeB else { return }
+            
+            bulletNode.removeFromParent()
+            
+            if playerNode.name == "allyPlayer" && bulletNode.name == "enemyBullet" {
+                playerNode.receiveDamage()
+                
+            }
+
+        }
+    
     }
 }

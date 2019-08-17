@@ -18,11 +18,12 @@ class GameViewController: UIViewController {
         
         if let skView = view as? SKView {
             //OBS: é necessário configuar as cenas de menu e de jogo
-            let scene = MenuScene(multiplayerGameScene: GameScene(size: view.frame.size))
+            let gameScene = GameScene(size: view.frame.size)
+            let menuScene = MenuScene(multiplayerGameScene: gameScene)
             //let scene = GameScene(size: view.frame.size)
-            scene.anchorPoint = CGPoint(x: 0.5, y: 0.5)
-            scene.scaleMode = .resizeFill
-            skView.presentScene(scene)
+            menuScene.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+            menuScene.scaleMode = .resizeFill
+            skView.presentScene(menuScene)
 
             skView.showsFPS = true
             skView.showsNodeCount = true

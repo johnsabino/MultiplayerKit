@@ -11,15 +11,15 @@ import SpriteKit
 import GameKit
 
 class SpaceShip: MPSpriteNode {
+    var hp: Int = 30
     
     override init(gkPlayer: GKPlayer, texture: SKTexture? = nil, color: UIColor, size: CGSize) {
         super.init(gkPlayer: gkPlayer, texture: texture, color: color, size: size)
         
         zPosition = 2
-        
+        name = isLocalPlayer ? "allyPlayer" : "enemyPlayer"
         let pb = SKPhysicsBody(rectangleOf: size)
         pb.affectedByGravity = false
-        pb.isDynamic = true
         pb.categoryBitMask = ColliderType.player
         pb.contactTestBitMask = ColliderType.bullet
         pb.collisionBitMask = ColliderType.none
@@ -31,31 +31,43 @@ class SpaceShip: MPSpriteNode {
     }
     
     func shoot(in scene: SKScene) {
-        let bullet = instantiateBullet()
-        scene.addChild(bullet)
-        let vector = CGVector(dx: sin(-zRotation) * 1000, dy: cos(-zRotation) * 1000)
-        let move = SKAction.move(by: vector, duration: 2)
+        if hp <= 0 { return }
+        let bullet = instantiateBullet(in: scene)
+        addChild(bullet)
+        let point = CGPoint(x: bullet.position.x * 10, y: bullet.position.y * 10)
+        let move = SKAction.move(to: point, duration: 1)
         
         bullet.run(move) {
             bullet.removeFromParent()
         }
         
         //OBS: precisa enviar a mensagem de ataque
-        send(message: ["attack": 0])
+        send(message: ["action": "attack"])
     }
     
-    func instantiateBullet() -> SKSpriteNode {
+    func instantiateBullet(in scene: SKScene) -> SKSpriteNode {
         let bullet = SKSpriteNode(color: .red, size: CGSize(width: 10, height: 10))
-        bullet.position = position
+        bullet.position = convert(position, from: scene)
+        bullet.position.y += 50
+        bullet.name = isLocalPlayer ? "allyBullet" : "enemyBullet"
         let pb = SKPhysicsBody(rectangleOf: bullet.size)
         pb.affectedByGravity = false
-        pb.isDynamic = true
-        pb.categoryBitMask = ColliderType.bullet
+        pb.categoryBitMask = ColliderType.bullet 
         pb.contactTestBitMask = ColliderType.player
         pb.collisionBitMask = ColliderType.none
         bullet.physicsBody = pb
         
         return bullet
+    }
+    
+    func receiveDamage() {
+        hp -= 10
+        if hp <= 0 {
+            print("E MORREU...")
+            removeFromParent()
+        }
+        
+        send(message: ["action": "hitted"])
     }
     
 }

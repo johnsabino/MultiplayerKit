@@ -43,12 +43,12 @@ open class MPMenuScene: SKScene {
         }
         
         GameCenterService.shared.connectionDelegate = multiplayerGameScene
-        // Set the scale mode to scale to fit the window
+        multiplayerGameScene.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         multiplayerGameScene.scaleMode = .resizeFill
-        //gameScene.currentMatch = match
-        self.view?.ignoresSiblingOrder = true
+        view?.ignoresSiblingOrder = true
+        
         // Present the scene
-        self.view?.presentScene(multiplayerGameScene, transition: SKTransition.crossFade(withDuration: 1.0))
+        view?.presentScene(multiplayerGameScene, transition: SKTransition.crossFade(withDuration: 1.0))
         
         GameCenterService.shared.currentMatch = match
     }

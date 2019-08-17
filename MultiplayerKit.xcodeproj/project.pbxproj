@@ -234,13 +234,13 @@
 				6C0486EA23071B61009A888C /* Nodes */,
 				6C6EEAF322FF3CBA00996FC8 /* Joystick */,
 				6C6EEB0F22FF477E00996FC8 /* Scenes */,
+				6C0486ED23071CF9009A888C /* PhysicsDetection.swift */,
 				6C99F98622FC9A0B00B8C80B /* AppDelegate.swift */,
 				6C99F98E22FC9A0B00B8C80B /* GameViewController.swift */,
 				6C99F99022FC9A0B00B8C80B /* Main.storyboard */,
 				6C99F99322FC9A0C00B8C80B /* Assets.xcassets */,
 				6C99F99522FC9A0C00B8C80B /* LaunchScreen.storyboard */,
 				6C99F99822FC9A0C00B8C80B /* Info.plist */,
-				6C0486ED23071CF9009A888C /* PhysicsDetection.swift */,
 			);
 			path = Demo;
 			sourceTree = "<group>";
