@@ -34,7 +34,8 @@ open class MultiplayerService: NSObject {
      */
     public func send<T: MessageProtocol>(_ data: T, with mode: GKMatch.SendDataMode = .reliable) {
         do {
-            let dataEncoded = try JSONSerialization.data(withJSONObject: data.asDictionary, options: .prettyPrinted)
+            let dict: [String: Any] = ["\(T.self)": data.asDictionary]
+            let dataEncoded = try JSONSerialization.data(withJSONObject: dict, options: .prettyPrinted)
             try gameCenterService.currentMatch?.sendData(toAllPlayers: dataEncoded, with: mode)
         } catch {
             print("Error while archive data: \(error)")

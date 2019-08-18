@@ -15,7 +15,7 @@ public class GameCenterService: NSObject {
     public var currentMatch: GKMatch?
     var currentMatchmakerVC: GKMatchmakerViewController?
     public weak var connectionDelegate: ConnectionDelegate?
-    weak var receiveDataDelegate: ReceiveDataDelegate?
+    public weak var receiveDataDelegate: ReceiveDataDelegate?
     
     var isAuthenticated: Bool {
         return GKLocalPlayer.local.isAuthenticated
@@ -94,9 +94,9 @@ extension GameCenterService: GKMatchmakerViewControllerDelegate {
 
 extension GameCenterService: GKMatchDelegate {
     public func match(_ match: GKMatch, didReceive data: Data, fromRemotePlayer player: GKPlayer) {
-        print("DATA RECEIVED: \(data)")
-        
-        receiveDataDelegate?.didReceive(message: data, from: player)
+        if let set = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
+            receiveDataDelegate?.didReceive(message: set, from: player)
+        }
     }
     
     public func match(_ match: GKMatch, player: GKPlayer, didChange state: GKPlayerConnectionState) {

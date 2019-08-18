@@ -26,6 +26,7 @@ class GameScene: MPGameScene {
         setupPlayers()
     
         physicsWorld.contactDelegate = self
+        GameCenterService.shared.receiveDataDelegate = self
     }
     
     func setupPlayers() {
@@ -81,19 +82,36 @@ extension GameScene: JoystickDelegate {
     func joystickDidTapButtonA() {
         player.shoot(in: self)
     }
+    
+}
+
+extension GameScene: ReceiveDataDelegate {
+    func didReceive(message: [String: Any], from player: GKPlayer) {
+        
+        message
+        .caseIs(StartGame.self) { _ in
+            print("START GAME")
+        }
+        .caseIs(Position.self) { (content) in
+            if let playerNode = allPlayersNode[player.playerID.intValue] {
+                playerNode.changePlayer(position: CGPoint(x: content.positionX, y: content.positionY), angle: content.angle)
+            }
+        }
+    }
 }
 
 extension GameScene {
-    override func didReceive(message: Data, from player: GKPlayer) {
-        super.didReceive(message: message, from: player)
-        guard let player = allPlayersNode[player.playerID.intValue] as? SpaceShip else { return }
-        
-        message
-            .caseIs(Attack.self) { _ in 
-                player.shoot(in: self)
-            }
-        
-    }
+    
+//    override func didReceive(message: Data, from player: GKPlayer) {
+//        super.didReceive(message: message, from: player)
+//        guard let player = allPlayersNode[player.playerID.intValue] as? SpaceShip else { return }
+//
+//        message
+//            .caseIs(Attack.self) { _ in
+//                player.shoot(in: self)
+//            }
+//
+//    }
 //    override func didReceive(message: Message, from player: GKPlayer) {
 //        super.didReceive(message: message, from: player)
 //        guard let player = allPlayersNode[player.playerID.intValue] as? SpaceShip else { return }

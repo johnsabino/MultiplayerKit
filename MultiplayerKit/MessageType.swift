@@ -4,7 +4,7 @@ public struct StartGame: MessageProtocol {
     }
 }
 public struct Position: MessageProtocol {
-    var positionX: CGFloat, positionY: CGFloat, angle: CGFloat
+    public var positionX: CGFloat, positionY: CGFloat, angle: CGFloat
     
     public init(positionX: CGFloat, positionY: CGFloat, angle: CGFloat) {
         self.positionX = positionX
@@ -22,3 +22,5 @@ public struct Hitted: MessageProtocol {
         
     }
 }
+
+var all: [MessageProtocol.Type] = [StartGame.self, Hitted.self]

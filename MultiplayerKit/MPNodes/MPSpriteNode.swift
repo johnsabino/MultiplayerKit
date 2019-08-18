@@ -39,7 +39,7 @@ open class MPSpriteNode: SKSpriteNode {
         send(message: Position(positionX: position.x, positionY: position.y, angle: zRotation))
     }
     
-    func changePlayer(position: CGPoint, angle: CGFloat = 0, smoothness: Double = 0.05) {
+    public func changePlayer(position: CGPoint, angle: CGFloat = 0, smoothness: Double = 0.05) {
         run(SKAction.move(to: position, duration: smoothness))
         zRotation = angle
     }
