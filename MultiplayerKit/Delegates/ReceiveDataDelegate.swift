@@ -8,5 +8,5 @@
 import GameKit
 
 public protocol ReceiveDataDelegate: class {
-    func didReceive(message: Message, from player: GKPlayer)
+    func didReceive(message: Data, from player: GKPlayer)
 }

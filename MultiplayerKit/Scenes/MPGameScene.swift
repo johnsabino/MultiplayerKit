@@ -40,14 +40,23 @@ open class MPGameScene: SKScene {
 
 // MARK: - UpdateSceneDelegate
 extension MPGameScene: ReceiveDataDelegate {
-    @objc open func didReceive(message: Message, from player: GKPlayer) {
-        //Did receive position
-        if let position = message["position"] as? [CGFloat],
-           let player = allPlayersNode[player.playerID.intValue] {
-            
-                player.changePlayer(position: CGPoint(x: position[0], y: position[1]), angle: position[2])
-        }
+    @objc open func didReceive(message: Data, from player: GKPlayer) {
+        message
+            .caseIs(Position.self) {
+                if let playerNode = allPlayersNode[player.playerID.intValue] {
+                    playerNode.changePlayer(position: CGPoint(x: $0.positionX, y: $0.positionY), angle: $0.angle)
+                }
+            }
     }
+    
+    //open func didReceive(message: Message, from player: GKPlayer) {
+        //Did receive position
+        //print("MESSAGE: \(message)")
+//        if let content = message.content as? Position, let player = allPlayersNode[player.playerID.intValue] {
+//            
+//            player.changePlayer(position: content.position, angle: content.angle)
+//        }
+    //}
 
 }
 // MARK: - ConnectionDelegate

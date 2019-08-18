@@ -84,21 +84,31 @@ extension GameScene: JoystickDelegate {
 }
 
 extension GameScene {
-    override func didReceive(message: Message, from player: GKPlayer) {
+    override func didReceive(message: Data, from player: GKPlayer) {
         super.didReceive(message: message, from: player)
         guard let player = allPlayersNode[player.playerID.intValue] as? SpaceShip else { return }
         
-        if let action = message["action"] as? String {
-            switch action {
-            case "attack":
+        message
+            .caseIs(Attack.self) { _ in 
                 player.shoot(in: self)
-            case "hitted":
-                player.receiveDamage()
-            default:
-                break
             }
-        }
+        
     }
+//    override func didReceive(message: Message, from player: GKPlayer) {
+//        super.didReceive(message: message, from: player)
+//        guard let player = allPlayersNode[player.playerID.intValue] as? SpaceShip else { return }
+//
+////        if let action = message["action"] as? String {
+////            switch action {
+////            case "attack":
+////                player.shoot(in: self)
+////            case "hitted":
+////                player.receiveDamage()
+////            default:
+////                break
+////            }
+////        }
+//    }
 }
 
 extension GameScene: SKPhysicsContactDelegate {

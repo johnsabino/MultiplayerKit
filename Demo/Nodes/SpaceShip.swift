@@ -42,7 +42,7 @@ class SpaceShip: MPSpriteNode {
         }
         
         //OBS: precisa enviar a mensagem de ataque
-        send(message: ["action": "attack"])
+        send(message: Attack())
     }
     
     func instantiateBullet(in scene: SKScene) -> SKSpriteNode {
@@ -67,7 +67,7 @@ class SpaceShip: MPSpriteNode {
             removeFromParent()
         }
         
-        send(message: ["action": "hitted"])
+        //send(message: ["action": "hitted"])
     }
     
 }

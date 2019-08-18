@@ -31,12 +31,12 @@ open class MPSpriteNode: SKSpriteNode {
         fatalError("init(coder:) has not been implemented")
     }
     
-    public func send(message: [String: Any]) {
+    public func send<T: MessageProtocol>(message: T) {
         if isLocalPlayer { mpKit.send(message) }
     }
     
     public func sendPosition() {
-        send(message: ["position": [position.x, position.y, zRotation]])
+        send(message: Position(positionX: position.x, positionY: position.y, angle: zRotation))
     }
     
     func changePlayer(position: CGPoint, angle: CGFloat = 0, smoothness: Double = 0.05) {
