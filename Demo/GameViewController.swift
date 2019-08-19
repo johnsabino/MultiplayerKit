@@ -30,7 +30,7 @@ class GameViewController: UIViewController {
             skView.ignoresSiblingOrder = true
             //skView.showsPhysics = true
 
-            //OBS: é necessário setar o delegate da view controller de autenticação
+            //OBS: é necessário setar a view controller de autenticação
             GameCenterService.shared.authenticationViewController = self
         }
        

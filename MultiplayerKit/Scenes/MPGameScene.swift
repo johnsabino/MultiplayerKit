@@ -13,7 +13,7 @@ open class MPGameScene: SKScene {
     
     public var allPlayersNode: [Int: MPSpriteNode] = [:]
     
-    public var multiplayer = MultiplayerService.shared
+    //public var multiplayer = MultiplayerService.shared
     public var otherPlayers: [GKPlayer] {
         guard let match = GameCenterService.shared.currentMatch else { return [] }
         return match.players

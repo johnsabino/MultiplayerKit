@@ -26,9 +26,9 @@ public class GameCenterService: NSObject {
         
         GKLocalPlayer.local.authenticateHandler = { authenticationVC, error in
             
-            NotificationCenter.default.post(name: .authenticationChanged, object: GKLocalPlayer.local.isAuthenticated)
+            NotificationCenter.default.post(name: .authenticationChanged, object: self.isAuthenticated)
             
-            if GKLocalPlayer.local.isAuthenticated {
+            if self.isAuthenticated {
                 GKLocalPlayer.local.register(self)
                 print("Authenticated to Game Center!")
                 
@@ -39,22 +39,18 @@ public class GameCenterService: NSObject {
             }
             
         }
-        
     }
     
-    public func presentMatchMaker() {
+    public func presentMatchMaker(minPlayers: Int = 2, maxPlayers: Int = 4, defaultNumberOfPlayers: Int = 4) {
         if !isAuthenticated {return}
 
         let request = GKMatchRequest()
-        
-        request.minPlayers = MultiplayerService.shared.matchMinPlayers
-        request.maxPlayers = MultiplayerService.shared.matchMaxPlayers
-        request.defaultNumberOfPlayers = MultiplayerService.shared.defaultNumberOfPlayers
-        
+        request.minPlayers = minPlayers
+        request.maxPlayers = maxPlayers
+        request.defaultNumberOfPlayers = defaultNumberOfPlayers
         request.inviteMessage = "Would you like to play?"
         
         if let vc = GKMatchmakerViewController(matchRequest: request) {
-            
             vc.matchmakerDelegate = self
             currentMatchmakerVC = vc
             authenticationViewController?.present(vc, animated: true)
@@ -86,7 +82,6 @@ extension GameCenterService: GKMatchmakerViewControllerDelegate {
     public func startGame(match: GKMatch) {
         self.currentMatch = match
         match.delegate = self
-        MultiplayerService.shared.send(StartGame())
         NotificationCenter.default.post(name: .presentGame, object: match)
     }
     

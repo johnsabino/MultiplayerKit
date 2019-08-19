@@ -33,7 +33,7 @@ class MenuScene: MPMenuScene {
         startButton = ButtonNode(text: "START GAME")
         startButton.position.y = -30
         startButton.actionBlock = {
-            GameCenterService.shared.presentMatchMaker()
+            self.presentMatchMaker()
         }
         addChild(startButton)
         
@@ -51,7 +51,7 @@ class MenuScene: MPMenuScene {
             gameScene.view?.ignoresSiblingOrder = true
             
             // Present the scene
-            view.presentScene(gameScene, transition: SKTransition.crossFade(withDuration: 1.0))
+            view.presentScene(gameScene, transition: .crossFade(withDuration: 1.0))
         }
         addChild(trainingButton)
     }

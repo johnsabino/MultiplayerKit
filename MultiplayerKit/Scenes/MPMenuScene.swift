@@ -37,6 +37,10 @@ open class MPMenuScene: SKScene {
         
     }
     
+    public func presentMatchMaker() {
+        GameCenterService.shared.presentMatchMaker()
+    }
+    
     @objc open func presentGame(_ notification: Notification) {
         guard let match = notification.object as? GKMatch else {
             return
