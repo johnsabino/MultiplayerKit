@@ -11,11 +11,13 @@ import MultiplayerKit
 import GameKit
 
 //OBS: a cena do menu deve herdar de MPMenuScene
-class GameScene: MPGameScene {
+class GameScene: SKScene, Multiplayer {
     var inputController: InputController!
     var isTraining = false
+    
     //OBS: o player deve herdar de MPSpriteNode
-    var player: SpaceShip!
+    var playerNode: SpaceShip!
+    var allPlayersNode: [GKPlayer: SpaceShip] = [:]
     
     override func didMove(to view: SKView) {
         super.didMove(to: view)
@@ -26,20 +28,20 @@ class GameScene: MPGameScene {
         setupPlayers()
     
         physicsWorld.contactDelegate = self
-        GameCenterService.shared.receiveDataDelegate = self
+        gameCenter.receiveDataDelegate = self
     }
     
     func setupPlayers() {
-        player = SpaceShip(gkPlayer: GKLocalPlayer.local, color: .purple, size: CGSize(width: 60, height: 60))
-        player.position = CGPoint.zero
-        addChild(player)
+        playerNode = SpaceShip(gkPlayer: GKLocalPlayer.local, color: .purple, size: CGSize(width: 60, height: 60))
+        playerNode.position = CGPoint.zero
+        addChild(playerNode)
         
         //OBS: é necessário configuar os outros jogadores para coloca-los na cena
-        otherPlayers.forEach {
+        players.forEach {
             let player = SpaceShip(gkPlayer: $0, color: .purple, size: CGSize(width: 60, height: 60))
-            loadPlayers(id: $0.playerID, playerNode: player)
+            allPlayersNode[$0] = player
+            addChild(player)
         }
-        
 //        if isTraining {
 //            let player2 = SpaceShip(gkPlayer: GKPlayer(), color: .purple, size: CGSize(width: 60, height: 60))
 //            player2.position = CGPoint.zero
@@ -71,62 +73,43 @@ extension GameScene: JoystickDelegate {
     func joystickUpdateTracking(direction: CGPoint, angle: CGFloat) {
         //movimentação local do jogador
         
-        player.physicsBody?.velocity = CGVector(dx: direction.x * 3, dy: direction.y * 3)
-        player.zRotation = angle
+        playerNode.physicsBody?.velocity = CGVector(dx: direction.x * 3, dy: direction.y * 3)
+        playerNode.zRotation = angle
+        
+        let position = Position(positionX: playerNode.position.x, positionY: playerNode.position.y, angle: playerNode.zRotation)
+        send(position)
         
     }
     func joystickDidEndTracking(direction: CGPoint) {
-        player.physicsBody?.velocity = CGVector.zero
+        playerNode.physicsBody?.velocity = CGVector.zero
     }
     
     func joystickDidTapButtonA() {
-        player.shoot(in: self)
+        playerNode.shoot(in: self)
     }
     
 }
 
 extension GameScene: ReceiveDataDelegate {
     func didReceive(message: [String: Any], from player: GKPlayer) {
+        guard let playerNode = allPlayersNode[player] else { return }
         
+        //Search message type
         message
         .caseIs(StartGame.self) { _ in
             print("START GAME")
         }
         .caseIs(Position.self) { (content) in
-            if let playerNode = allPlayersNode[player.playerID.intValue] {
-                playerNode.changePlayer(position: CGPoint(x: content.positionX, y: content.positionY), angle: content.angle)
-            }
+            playerNode.changePlayer(position: CGPoint(x: content.positionX, y: content.positionY), angle: content.angle)
         }
     }
 }
 
-extension GameScene {
+extension GameScene: ConnectionDelegate {
+    func didPlayerConnected() {
+        
+    }
     
-//    override func didReceive(message: Data, from player: GKPlayer) {
-//        super.didReceive(message: message, from: player)
-//        guard let player = allPlayersNode[player.playerID.intValue] as? SpaceShip else { return }
-//
-//        message
-//            .caseIs(Attack.self) { _ in
-//                player.shoot(in: self)
-//            }
-//
-//    }
-//    override func didReceive(message: Message, from player: GKPlayer) {
-//        super.didReceive(message: message, from: player)
-//        guard let player = allPlayersNode[player.playerID.intValue] as? SpaceShip else { return }
-//
-////        if let action = message["action"] as? String {
-////            switch action {
-////            case "attack":
-////                player.shoot(in: self)
-////            case "hitted":
-////                player.receiveDamage()
-////            default:
-////                break
-////            }
-////        }
-//    }
 }
 
 extension GameScene: SKPhysicsContactDelegate {

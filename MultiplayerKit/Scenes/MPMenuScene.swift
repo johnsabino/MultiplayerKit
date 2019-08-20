@@ -11,15 +11,15 @@ import GameKit
 
 open class MPMenuScene: SKScene {
     
-    var multiplayerGameScene: MPGameScene!
+    var gameScene: SKScene!
     
     // MARK: Inits
     override public init(size: CGSize) {
         super.init(size: size)
     }
-    convenience public init(multiplayerGameScene: MPGameScene) {
-        self.init(size: multiplayerGameScene.size)
-        self.multiplayerGameScene = multiplayerGameScene
+    convenience public init(gameScene: SKScene) {
+        self.init(size: gameScene.size)
+        self.gameScene = gameScene
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -46,13 +46,12 @@ open class MPMenuScene: SKScene {
             return
         }
         
-        GameCenterService.shared.connectionDelegate = multiplayerGameScene
-        multiplayerGameScene.anchorPoint = CGPoint(x: 0.5, y: 0.5)
-        multiplayerGameScene.scaleMode = .resizeFill
+        gameScene.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+        gameScene.scaleMode = .resizeFill
         view?.ignoresSiblingOrder = true
         
         // Present the scene
-        view?.presentScene(multiplayerGameScene, transition: SKTransition.crossFade(withDuration: 1.0))
+        view?.presentScene(gameScene, transition: SKTransition.crossFade(withDuration: 1.0))
         
         GameCenterService.shared.currentMatch = match
     }

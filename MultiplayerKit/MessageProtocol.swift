@@ -1,27 +1,14 @@
-public extension Data {
-    @discardableResult
-    func caseIs<T: MessageProtocol>(_ type: T.Type, perform: (_ message: T) -> Void) -> Data {
-        if let set = try? JSONSerialization.jsonObject(with: self, options: []) as? [String: Any] {
-            if (set["type"] as? String) != "\(T.self)" { return self }
-        }
-        if let decoded = try? JSONDecoder().decode(T.self, from: self) {
-            perform(decoded)
-        }
-        return self
-    }
-}
-
 public extension Dictionary where Key == String {
     @discardableResult
     func caseIs<T: MessageProtocol>(_ type: T.Type, perform: (_ message: T) -> Void) -> [String: Any] {
-        
+
         guard let content = self.first?.value, self.keys.first == "\(T.self)" else { return self }
         
-        if let data = try? JSONSerialization.data(withJSONObject: content, options: .prettyPrinted) {
-            if let decoded = try? JSONDecoder().decode(T.self, from: data) {
-                perform(decoded)
-            }
+        if let jsonData = try? JSONSerialization.data(withJSONObject: content),
+            let decoded = try? JSONDecoder().decode(T.self, from: jsonData) {
+            perform(decoded)
         }
+        
         return self
     }
 }

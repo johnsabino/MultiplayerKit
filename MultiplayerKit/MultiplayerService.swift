@@ -10,6 +10,35 @@ import GameKit
 
 public let mpKit = MultiplayerService.shared
 
+public protocol Multiplayer {
+    
+}
+
+public extension Multiplayer {
+    var gameCenter: GameCenterService {
+        return GameCenterService.shared
+    }
+    var players: [GKPlayer] {
+        guard let match = GameCenterService.shared.currentMatch else { return [] }
+        return match.players
+    }
+    
+    /**
+     Transmits data to all players connected to the match.
+     - parameter data: the message to be send.
+     - parameter mode: The mechanism used to send the data. The default is reliable
+     */
+    func send<T: MessageProtocol>(_ data: T, with mode: GKMatch.SendDataMode = .reliable) {
+        do {
+            let dict: [String: Any] = ["\(T.self)": data.asDictionary]
+            let dataEncoded = try JSONSerialization.data(withJSONObject: dict)
+            try GameCenterService.shared.currentMatch?.sendData(toAllPlayers: dataEncoded, with: mode)
+        } catch {
+            print("Error while archive data and send: \(error)")
+        }
+    }
+}
+
 open class MultiplayerService: NSObject {
     
     /** Multiplayer service Singleton */
