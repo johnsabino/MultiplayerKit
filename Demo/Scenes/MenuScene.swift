@@ -10,7 +10,9 @@ import SpriteKit
 import GameKit
 import MultiplayerKit
 
-//OBS: a cena do menu deve herdar de MPMenuScene
+/*OBS: a cena do menu deve herdar de MPMenuScene
+ pois não pode ser um protocolo. Já a GameScene(Multiplayer) pode ser um protocolo,
+pois tanto uma cena 2d quanto 3d podem implementa-lo */
 class MenuScene: MPMenuScene {
     
     var startButton: ButtonNode!
