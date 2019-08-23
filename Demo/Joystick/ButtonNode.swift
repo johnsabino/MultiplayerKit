@@ -9,26 +9,28 @@
 import SpriteKit
 
 class ButtonNode: SKSpriteNode {
-    
+
     var actionBlock : (() -> Void)?
-    
+
     override init(texture: SKTexture?, color: UIColor, size: CGSize) {
         super.init(texture: texture, color: color, size: size)
-    
+
     }
-    
-    convenience init(text: String, color: UIColor = .gray, size: CGSize = CGSize(width: 150, height: 50)) {
+
+    convenience init(text: String,
+                     color: UIColor = .gray,
+                     size: CGSize = CGSize(width: 150, height: 50)) {
         self.init(color: color, size: size)
-    
+
         isUserInteractionEnabled = true
         addChild(createButtonLabel(withText: text))
         zPosition = 1
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     private func createButtonLabel(withText text: String) -> SKLabelNode {
         let label = SKLabelNode(text: text)
         label.fontName = "Helvetica Bold"
@@ -38,23 +40,23 @@ class ButtonNode: SKSpriteNode {
         label.zPosition = 2
         return label
     }
-    
+
     var isEnabled: Bool = false {
         didSet {
             alpha = isEnabled ? 1 : 0.4
         }
     }
-    
+
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
-        
-        if !isEnabled { return } 
+
+        if !isEnabled { return }
         self.run(SKAction.fadeAlpha(to: 0.2, duration: 0.1))
     }
-    
+
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesEnded(touches, with: event)
-        
+
         if !isEnabled { return }
         if let block = actionBlock {
             block()

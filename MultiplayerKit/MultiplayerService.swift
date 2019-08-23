@@ -11,7 +11,7 @@ import GameKit
 public let mpKit = MultiplayerService.shared
 
 public protocol Multiplayer {
-    
+
 }
 
 public extension Multiplayer {
@@ -22,7 +22,7 @@ public extension Multiplayer {
         guard let match = GameCenterService.shared.currentMatch else { return [] }
         return match.players
     }
-    
+
     /**
      Transmits data to all players connected to the match.
      - parameter data: the message to be send.
@@ -40,22 +40,22 @@ public extension Multiplayer {
 }
 
 open class MultiplayerService: NSObject {
-    
+
     /** Multiplayer service Singleton */
     public static let shared = MultiplayerService()
-    
+
     /** Referência para o GameCenter service */
     let gameCenterService = GameCenterService.shared
-    
+
     /** Mínimo de jogadores na partida */
     private(set) var matchMinPlayers: Int = 2
-    
+
     /** Máximo de jogadores na partida */
     private(set) var matchMaxPlayers: Int = 4
-   
+
     /** Quantidade padráo de jogadores na partida */
     private(set) var defaultNumberOfPlayers: Int = 2
-    
+
     /**
      Transmits data to all players connected to the match.
      - parameter data: the message to be send.

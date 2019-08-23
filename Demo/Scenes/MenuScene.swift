@@ -14,22 +14,22 @@ import MultiplayerKit
  pois não pode ser um protocolo. Já a GameScene(Multiplayer) pode ser um protocolo,
 pois tanto uma cena 2d quanto 3d podem implementa-lo */
 class MenuScene: MPMenuScene {
-    
+
     var startButton: ButtonNode!
     var trainingButton: ButtonNode!
-    
+
     override func authenticationChanged(_ notification: Notification) {
         if let isConnected = notification.object as? Bool {
             startButton.isEnabled = isConnected
         }
     }
-    
+
     override func didMove(to view: SKView) {
         super.didMove(to: view)
-        
+
         setupButtons()
     }
-    
+
     func setupButtons() {
         //StartButton
         startButton = ButtonNode(text: "START GAME")
@@ -38,7 +38,7 @@ class MenuScene: MPMenuScene {
             self.presentMatchMaker()
         }
         addChild(startButton)
-        
+
         //TrainingButton
         trainingButton = ButtonNode(text: "TRAINING MODE")
         trainingButton.isEnabled = true
@@ -51,7 +51,7 @@ class MenuScene: MPMenuScene {
             gameScene.scaleMode = .resizeFill
             gameScene.view?.showsPhysics = true
             gameScene.view?.ignoresSiblingOrder = true
-            
+
             // Present the scene
             view.presentScene(gameScene, transition: .crossFade(withDuration: 1.0))
         }

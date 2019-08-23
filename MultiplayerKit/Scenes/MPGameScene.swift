@@ -10,33 +10,33 @@ import SpriteKit
 import GameKit
 
 open class MPGameScene: SKScene {
-    
+
     public var allPlayersNode: [Int: MPSpriteNode] = [:]
-    
+
     //public var multiplayer = MultiplayerService.shared
     public var otherPlayers: [GKPlayer] {
         guard let match = GameCenterService.shared.currentMatch else { return [] }
         return match.players
-        
+
     }
     override public init(size: CGSize) {
         super.init(size: size)
     }
-    
+
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     public func loadPlayers(id: String, playerNode: MPSpriteNode) {
         allPlayersNode[id.intValue] = playerNode
         addChild(playerNode)
     }
-    
+
     override open func didMove(to view: SKView) {
         super.didMove(to: view)
         //GameCenterService.shared.receiveDataDelegate = self
     }
-    
+
 //    open func didReceive(message: Data, from player: GKPlayer, messageType: MessageProtocol.Type) {
 //        message
 //            .caseIs(Position.self) {
@@ -61,7 +61,7 @@ open class MPGameScene: SKScene {
 // MARK: - ConnectionDelegate
 extension MPGameScene: ConnectionDelegate {
     @objc open func didPlayerConnected() {
-        
+
     }
-    
+
 }

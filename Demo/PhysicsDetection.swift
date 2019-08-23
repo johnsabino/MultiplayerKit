@@ -9,7 +9,7 @@
 import SpriteKit
 
 struct ColliderType {
-    static let none: UInt32 = UInt32.min 
+    static let none: UInt32 = UInt32.min
     static let all: UInt32 = UInt32.max
     static let player: UInt32 = 0x1 << 0
     static let enemy: UInt32 = 0x1 << 1
@@ -19,20 +19,20 @@ struct ColliderType {
 
 class PhysicsDetection: NSObject, SKPhysicsContactDelegate {
     //var player: CharacterNode?
-    
+
     func didBegin(_ contact: SKPhysicsContact) {
         print("COLISAO GENERICA")
-        
+
         let collision: UInt32 = contact.bodyA.categoryBitMask | contact.bodyB.categoryBitMask
-    
+
         if collision == ColliderType.player | ColliderType.bullet {
             print("COLIDIU")
         }
-        
+
         if collision == ColliderType.player | ColliderType.player {
             print("collision between players")
         }
-        
+
     }
-    
+
 }

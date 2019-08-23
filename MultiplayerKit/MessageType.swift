@@ -1,9 +1,9 @@
 public struct Position: MessageProtocol {
-    public var positionX: CGFloat, positionY: CGFloat, angle: CGFloat
-    
-    public init(positionX: CGFloat, positionY: CGFloat, angle: CGFloat) {
-        self.positionX = positionX
-        self.positionY = positionY
+    public var x: CGFloat, y: CGFloat, angle: CGFloat
+
+    public init(x: CGFloat, y: CGFloat, angle: CGFloat) {
+        self.x = x
+        self.y = y
         self.angle = angle
     }
 }

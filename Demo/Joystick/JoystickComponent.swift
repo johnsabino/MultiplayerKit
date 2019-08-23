@@ -11,7 +11,7 @@ import SpriteKit
 open class JoystickComponent: SKSpriteNode {
 
     var image: UIImage?
-    
+
     var diameter: CGFloat {
         get {
             return size.width
@@ -28,15 +28,15 @@ open class JoystickComponent: SKSpriteNode {
             diameter = newRadius * 2
         }
     }
-    
+
     init(diameter: CGFloat, color: UIColor? = nil, image: UIImage? = nil) {
         super.init(texture: nil, color: UIColor.black, size: CGSize(width: diameter, height: diameter))
-        
+
         self.diameter = diameter
         self.image = image
-        
+
         let size = CGSize(width: diameter, height: diameter)
-        
+
         if image != nil {
             UIGraphicsBeginImageContextWithOptions(size, false, UIScreen.main.scale)
             image?.draw(in: CGRect(origin: CGPoint.zero, size: size), blendMode: .normal, alpha: 0.4)
@@ -44,7 +44,7 @@ open class JoystickComponent: SKSpriteNode {
                 UIGraphicsEndImageContext()
                 texture = SKTexture(image: needImage)
             }
-            
+
         } else if let c = color {
             let circle = SKShapeNode(circleOfRadius: diameter / 2 )
             circle.position = self.position
@@ -54,9 +54,9 @@ open class JoystickComponent: SKSpriteNode {
             self.color = UIColor.clear
             self.alpha = 0.4
         }
-        
+
     }
-    
+
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

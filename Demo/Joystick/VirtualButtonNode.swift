@@ -15,7 +15,7 @@ class VirtualButtonNode: SKNode {
     override init() {
         super.init()
     }
-    
+
     convenience init(name: String, radius: CGFloat, fillColor: SKColor, inPosition: CGPoint) {
         self.init()
         self.isUserInteractionEnabled = true
@@ -26,7 +26,7 @@ class VirtualButtonNode: SKNode {
         self.position = inPosition
         shape.position = position
         addChild(shape)
-        
+
         buttonName = SKLabelNode(text: name)
         buttonName.verticalAlignmentMode = .center
         buttonName.position = CGPoint.zero
@@ -35,21 +35,21 @@ class VirtualButtonNode: SKNode {
         buttonName.fontSize = 32
         shape.addChild(buttonName)
     }
-    
+
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         if let block = actionBlock {
             block()
         }
         self.run(SKAction.fadeAlpha(to: 0.2, duration: 0.1))
     }
-    
+
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.run(SKAction.fadeAlpha(to: 1, duration: 0.2))
     }
     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.run(SKAction.fadeAlpha(to: 1, duration: 0.2))
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

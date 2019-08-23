@@ -15,7 +15,7 @@ class GameViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         if let skView = view as? SKView {
             //OBS: é necessário configuar as cenas de menu e de jogo
             let gameScene = GameScene(size: view.frame.size)
@@ -33,7 +33,7 @@ class GameViewController: UIViewController {
             //OBS: é necessário setar a view controller de autenticação
             GameCenterService.shared.authenticationViewController = self
         }
-       
+
     }
 
     override var shouldAutorotate: Bool {

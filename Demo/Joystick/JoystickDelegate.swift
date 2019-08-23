@@ -20,7 +20,7 @@ protocol JoystickDelegate: class {
      the direction is negative, in the right side, positive.
      */
     func joystickDidMoved(direction: CGPoint)
-    
+
     /**
      Callend when joystick is tracking, its called at 60fps.
      - parameter direction: joystick's direction.
@@ -35,7 +35,7 @@ protocol JoystickDelegate: class {
      the direction is negative, in the right side, positive.
      */
     func joystickDidEndTracking(direction: CGPoint)
-    
+
     func joystickDidTapButtonA()
     func joystickDidTapButtonB()
     func joystickDidTapDown()
