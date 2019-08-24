@@ -32,11 +32,11 @@ open class MPSpriteNode: SKSpriteNode {
     }
 
     public func send<T: MessageProtocol>(message: T) {
-        if isLocalPlayer { mpKit.send(message) }
+       // if isLocalPlayer { mpKit.send(message) }
     }
 
     public func sendPosition() {
-        send(message: Position(x: position.x, y: position.y, angle: zRotation))
+        //send(message: Position(x: position.x, y: position.y, angle: zRotation))
     }
 
     public func changePlayer(position: CGPoint, angle: CGFloat = 0, smoothness: Double = 0.05) {

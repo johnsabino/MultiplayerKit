@@ -89,9 +89,9 @@ extension GameCenterService: GKMatchmakerViewControllerDelegate {
 
 extension GameCenterService: GKMatchDelegate {
     public func match(_ match: GKMatch, didReceive data: Data, fromRemotePlayer player: GKPlayer) {
-        if let set = try? JSONSerialization.jsonObject(with: data) as? [String: Any] {
-            receiveDataDelegate?.didReceive(message: set, from: player)
-        }
+        //if let set = try? JSONSerialization.jsonObject(with: data) as? [String: Any] {
+            receiveDataDelegate?.didReceive(message: data, from: player)
+        //}
     }
 
     public func match(_ match: GKMatch, player: GKPlayer, didChange state: GKPlayerConnectionState) {

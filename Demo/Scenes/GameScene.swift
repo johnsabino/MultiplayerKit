@@ -82,10 +82,13 @@ extension GameScene: JoystickDelegate {
         playerNode.physicsBody?.velocity = CGVector(dx: direction.x * 3, dy: direction.y * 3)
         playerNode.zRotation = angle
 
-        let position = Position(x: playerNode.position.x,
-                                y: playerNode.position.y,
-                                angle: playerNode.zRotation)
-        send(position)
+//        let position = Position(x: playerNode.position.x,
+//                                y: playerNode.position.y,
+//                                angle: playerNode.zRotation)
+        let pos: Message = .move(pos: playerNode.position, angle: playerNode.zRotation)
+        
+        send(pos)
+        //send(Message.message(msg: "123456789098765")) // max 15 caracteres
 
     }
     func joystickDidEndTracking(direction: CGPoint) {
@@ -99,17 +102,27 @@ extension GameScene: JoystickDelegate {
 }
 
 extension GameScene: ReceiveDataDelegate {
-    func didReceive(message: [String: Any], from player: GKPlayer) {
+    func didReceive(message: Data, from player: GKPlayer) {
         guard let playerNode = allPlayersNode[player] else { return }
+        let d: Message = decode(data: message)
+        print("MESSAGE RECEIVED: ", d)
 
+        switch d {
+        case .move(let pos, let angle):
+            playerNode.changePlayer(position: pos, angle: angle)
+        case .message(let msg):
+            print("MSG: \(msg)")
+        default:
+            break
+        }
         //Search message type
-        message
-        .caseIs(StartGame.self) { _ in
-            print("START GAME")
-        }
-        .caseIs(Position.self) { (pos) in
-            playerNode.changePlayer(position: CGPoint(x: pos.x, y: pos.y), angle: pos.angle)
-        }
+//        message
+//        .caseIs(StartGame.self) { _ in
+//            print("START GAME")
+//        }
+//        .caseIs(Position.self) { (pos) in
+//            playerNode.changePlayer(position: CGPoint(x: pos.x, y: pos.y), angle: pos.angle)
+//        }
     }
 }
 

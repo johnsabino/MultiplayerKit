@@ -28,6 +28,7 @@ class MenuScene: MPMenuScene {
         super.didMove(to: view)
 
         setupButtons()
+
     }
 
     func setupButtons() {
