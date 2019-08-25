@@ -15,7 +15,6 @@ class GameScene: SKScene, Multiplayer {
     var inputController: InputController!
     var isTraining = false
 
-    //OBS: o player deve herdar de MPSpriteNode
     var playerNode: SpaceShip!
     var allPlayersNode: [GKPlayer: SpaceShip] = [:]
 
@@ -28,7 +27,7 @@ class GameScene: SKScene, Multiplayer {
         setupPlayers()
 
         physicsWorld.contactDelegate = self
-        gameCenter.receiveDataDelegate = self
+        matchService.receiveDataDelegate = self
     }
 
     func setupPlayers() {
@@ -82,13 +81,11 @@ extension GameScene: JoystickDelegate {
         playerNode.physicsBody?.velocity = CGVector(dx: direction.x * 3, dy: direction.y * 3)
         playerNode.zRotation = angle
 
-//        let position = Position(x: playerNode.position.x,
-//                                y: playerNode.position.y,
-//                                angle: playerNode.zRotation)
-        let pos: Message = .move(pos: playerNode.position, angle: playerNode.zRotation)
-        
-        send(pos)
-        //send(Message.message(msg: "123456789098765")) // max 15 caracteres
+        let position = Position(x: playerNode.position.x,
+                                y: playerNode.position.y,
+                                angle: playerNode.zRotation)
+
+        send(position)
 
     }
     func joystickDidEndTracking(direction: CGPoint) {
@@ -101,31 +98,29 @@ extension GameScene: JoystickDelegate {
 
 }
 
+// MARK: ReceiveDataDelegate
 extension GameScene: ReceiveDataDelegate {
-    func didReceive(message: Data, from player: GKPlayer) {
-        guard let playerNode = allPlayersNode[player] else { return }
-        let d: Message = decode(data: message)
-        print("MESSAGE RECEIVED: ", d)
 
-        switch d {
-        case .move(let pos, let angle):
-            playerNode.changePlayer(position: pos, angle: angle)
-        case .message(let msg):
-            print("MSG: \(msg)")
-        default:
-            break
+    func didReceive(message: [String: Any], from player: GKPlayer) {
+        guard let playerNode = allPlayersNode[player] else { return }
+
+        message
+        .caseIs(Position.self) { content in
+            let point = CGPoint(x: content.x, y: content.y)
+            playerNode.changePlayer(position: point, angle: content.angle)
         }
-        //Search message type
-//        message
-//        .caseIs(StartGame.self) { _ in
-//            print("START GAME")
-//        }
-//        .caseIs(Position.self) { (pos) in
-//            playerNode.changePlayer(position: CGPoint(x: pos.x, y: pos.y), angle: pos.angle)
-//        }
+        .caseIs(StartGame.self) { _ in
+            print("START")
+        }
+        .caseIs(Attack.self) { _ in
+            print("ATTACK")
+        }
+
     }
+
 }
 
+// MARK: ConnectionDelegate
 extension GameScene: ConnectionDelegate {
     func didPlayerConnected() {
 
@@ -133,6 +128,7 @@ extension GameScene: ConnectionDelegate {
 
 }
 
+// MARK: ContactDelegate
 extension GameScene: SKPhysicsContactDelegate {
     func didBegin(_ contact: SKPhysicsContact) {
         let categoryA = contact.bodyA.categoryBitMask

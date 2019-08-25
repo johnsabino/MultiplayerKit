@@ -31,7 +31,7 @@ class GameViewController: UIViewController {
             //skView.showsPhysics = true
 
             //OBS: é necessário setar a view controller de autenticação
-            GameCenterService.shared.authenticationViewController = self
+            Matchmaker.shared.authenticationViewController = self
         }
 
     }

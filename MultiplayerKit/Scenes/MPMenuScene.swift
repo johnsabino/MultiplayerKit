@@ -38,11 +38,11 @@ open class MPMenuScene: SKScene {
     }
 
     public func presentMatchMaker() {
-        GameCenterService.shared.presentMatchMaker()
+        Matchmaker.shared.presentMatchMaker()
     }
 
     @objc open func presentGame(_ notification: Notification) {
-        guard let match = notification.object as? GKMatch else {
+        guard notification.object as? GKMatch != nil else {
             return
         }
 
@@ -53,6 +53,10 @@ open class MPMenuScene: SKScene {
         // Present the scene
         view?.presentScene(gameScene, transition: SKTransition.crossFade(withDuration: 1.0))
 
-        GameCenterService.shared.currentMatch = match
     }
+}
+
+enum Test: Message {
+    case aaa
+    case bbb
 }

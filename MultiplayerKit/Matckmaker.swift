@@ -1,21 +1,19 @@
 //
-//  GameCenterService.swift
+//  Matckmaker.swift
 //  MultiplayerKit
 //
-//  Created by João Paulo de Oliveira Sabino on 09/08/19.
+//  Created by João Paulo de Oliveira Sabino on 24/08/19.
 //  Copyright © 2019 João Paulo de Oliveira Sabino. All rights reserved.
 //
 
 import GameKit
 
-public class GameCenterService: NSObject {
-    public static let shared = GameCenterService()
+public class Matchmaker: NSObject, GKMatchmakerViewControllerDelegate {
+    public static let shared = Matchmaker()
 
     public var authenticationViewController: UIViewController?
     public var currentMatch: GKMatch?
     var currentMatchmakerVC: GKMatchmakerViewController?
-    public weak var connectionDelegate: ConnectionDelegate?
-    public weak var receiveDataDelegate: ReceiveDataDelegate?
 
     var isAuthenticated: Bool {
         return GKLocalPlayer.local.isAuthenticated
@@ -56,21 +54,11 @@ public class GameCenterService: NSObject {
             authenticationViewController?.present(vc, animated: true)
         }
     }
-}
-
-extension GameCenterService: GKMatchmakerViewControllerDelegate {
-
-    public func matchmakerViewControllerWasCancelled(_ viewController: GKMatchmakerViewController) {
-        viewController.dismiss(animated: true)
-    }
-
-    public func matchmakerViewController(_ viewController: GKMatchmakerViewController, didFailWithError error: Error) {
-        print("Matchmaker did fail with error: \(error.localizedDescription).")
-    }
 
     public func matchmakerViewController(_ viewController: GKMatchmakerViewController, didFind match: GKMatch) {
 
-        startGame(match: match)
+        self.currentMatch = match
+        MatchService.shared.didGameStarted(match)
 
         if let vc = currentMatchmakerVC {
             currentMatchmakerVC = nil
@@ -79,44 +67,21 @@ extension GameCenterService: GKMatchmakerViewControllerDelegate {
 
     }
 
-    public func startGame(match: GKMatch) {
-        self.currentMatch = match
-        match.delegate = self
-        NotificationCenter.default.post(name: .presentGame, object: match)
+    public func matchmakerViewControllerWasCancelled(_ viewController: GKMatchmakerViewController) {
+        viewController.dismiss(animated: true)
     }
 
-}
-
-extension GameCenterService: GKMatchDelegate {
-    public func match(_ match: GKMatch, didReceive data: Data, fromRemotePlayer player: GKPlayer) {
-        //if let set = try? JSONSerialization.jsonObject(with: data) as? [String: Any] {
-            receiveDataDelegate?.didReceive(message: data, from: player)
-        //}
-    }
-
-    public func match(_ match: GKMatch, player: GKPlayer, didChange state: GKPlayerConnectionState) {
-        if self.currentMatch != match { return }
-
-        switch state {
-        case .connected:
-            print("Player Conected!")
-            connectionDelegate?.didPlayerConnected()
-
-        case .disconnected:
-            print("Player Disconected!")
-        default:
-            print(state)
-        }
+    public func matchmakerViewController(_ viewController: GKMatchmakerViewController, didFailWithError error: Error) {
     }
 }
 
-extension GameCenterService: GKLocalPlayerListener {
+extension Matchmaker: GKLocalPlayerListener {
     public func player(_ player: GKPlayer, didAccept invite: GKInvite) {
 
 //        guard GKLocalPlayer.local.isAuthenticated else {return}
-//        
+//
 //        GKMatchmaker.shared().match(for: invite) { (match, error) in
-//                        
+//
 //            if let error = error {
 //                print("Error while accept invite: \(error)")
 //            } else if let match = match {

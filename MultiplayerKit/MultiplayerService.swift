@@ -8,16 +8,15 @@
 
 import GameKit
 
-public protocol Multiplayer {
-
-}
+public protocol Multiplayer { }
 
 public extension Multiplayer {
-    var gameCenter: GameCenterService {
-        return GameCenterService.shared
+    var matchService: MatchService {
+        return MatchService.shared
     }
+
     var players: [GKPlayer] {
-        guard let match = GameCenterService.shared.currentMatch else { return [] }
+        guard let match = Matchmaker.shared.currentMatch else { return [] }
         return match.players
     }
 
@@ -26,12 +25,11 @@ public extension Multiplayer {
      - parameter data: the message to be send.
      - parameter mode: The mechanism used to send the data. The default is reliable
      */
-    func send<T: Msg>(_ data: T, with mode: GKMatch.SendDataMode = .reliable) {
+    func send<T: MessageProtocol>(_ message: T, with mode: GKMatch.SendDataMode = .reliable) {
         do {
-            //let dict: [String: Any] = ["\(T.self)": data.asDictionary]
-            //let dataEncoded = try JSONSerialization.data(withJSONObject: dict)
-            let dataEncoded = encode(value: data) as Data
-            try GameCenterService.shared.currentMatch?.sendData(toAllPlayers: dataEncoded, with: mode)
+            let dictionary = ["\(T.self)": message.asDictionary]
+            let dataEncoded = try JSONSerialization.data(withJSONObject: dictionary)
+            try matchService.currentMatch?.sendData(toAllPlayers: dataEncoded, with: mode)
         } catch {
             print("Error while archive data and send: \(error)")
         }

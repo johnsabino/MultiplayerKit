@@ -14,11 +14,11 @@ open class MPGameScene: SKScene {
     public var allPlayersNode: [Int: MPSpriteNode] = [:]
 
     //public var multiplayer = MultiplayerService.shared
-    public var otherPlayers: [GKPlayer] {
-        guard let match = GameCenterService.shared.currentMatch else { return [] }
-        return match.players
-
-    }
+//    public var otherPlayers: [GKPlayer] {
+//        guard let match = GameCenterService<Test>().currentMatch else { return [] }
+//        return match.players
+//
+//    }
     override public init(size: CGSize) {
         super.init(size: size)
     }
