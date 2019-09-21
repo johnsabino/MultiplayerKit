@@ -17,10 +17,17 @@ class GameViewController: UIViewController {
         super.viewDidLoad()
 
         if let skView = view as? SKView {
+            //OBS: é necessário setar a view controller de autenticação
+
+            let multiplayerService = CustomMultiplayerService()
+            let matchmaker = Matchmaker(multiplayerService: multiplayerService)
+            matchmaker.authenticationViewController = self
+
             //OBS: é necessário configuar as cenas de menu e de jogo
-            let gameScene = GameScene(size: view.frame.size)
-            let menuScene = MenuScene(gameScene: gameScene)
-            //let scene = GameScene(size: view.frame.size)
+            let gameScene = GameScene(multiplayerService: multiplayerService)
+            //gameScene.multiplayerService = multiplayerService
+            let menuScene = MenuScene(gameScene: gameScene, matchmaker: matchmaker)
+
             menuScene.anchorPoint = CGPoint(x: 0.5, y: 0.5)
             menuScene.scaleMode = .resizeFill
             skView.presentScene(menuScene)
@@ -30,8 +37,6 @@ class GameViewController: UIViewController {
             skView.ignoresSiblingOrder = true
             //skView.showsPhysics = true
 
-            //OBS: é necessário setar a view controller de autenticação
-            Matchmaker.shared.authenticationViewController = self
         }
 
     }

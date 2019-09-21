@@ -12,14 +12,12 @@ import GameKit
 open class MPMenuScene: SKScene {
 
     var gameScene: SKScene!
-
-    // MARK: Inits
-    override public init(size: CGSize) {
-        super.init(size: size)
-    }
-    convenience public init(gameScene: SKScene) {
-        self.init(size: gameScene.size)
+    var matchmaker: Matchmaker
+    // MARK: Init
+    public init(gameScene: SKScene, matchmaker: Matchmaker) {
+        self.matchmaker = matchmaker
         self.gameScene = gameScene
+        super.init(size: gameScene.size)
     }
 
     required public init?(coder aDecoder: NSCoder) {
@@ -38,7 +36,7 @@ open class MPMenuScene: SKScene {
     }
 
     public func presentMatchMaker() {
-        Matchmaker.shared.presentMatchMaker()
+        matchmaker.presentMatchMaker()
     }
 
     @objc open func presentGame(_ notification: Notification) {
@@ -54,9 +52,4 @@ open class MPMenuScene: SKScene {
         view?.presentScene(gameScene, transition: SKTransition.crossFade(withDuration: 1.0))
 
     }
-}
-
-enum Test: Message {
-    case aaa
-    case bbb
 }

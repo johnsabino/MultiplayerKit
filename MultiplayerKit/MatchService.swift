@@ -9,19 +9,22 @@
 import GameKit
 
 public class MatchService: NSObject, GKMatchDelegate {
-    public static let shared = MatchService()
-
+    static let shared = MatchService()
+    weak var multiplayerService: MultiplayerService?
     public var currentMatch: GKMatch?
     public weak var connectionDelegate: ConnectionDelegate?
     public weak var receiveDataDelegate: ReceiveDataDelegate?
 
     override public init() {
         super.init()
-        print("MATCH SERVICE INIT")
+        print("INIT MATCH SERVICE")
     }
     public func match(_ match: GKMatch, didReceive data: Data, fromRemotePlayer player: GKPlayer) {
-        if let message = try? JSONSerialization.jsonObject(with: data) as? [String: Any] {
-            receiveDataDelegate?.didReceive(message: message, from: player)
+        //print("JSON: ", try? JSONSerialization.jsonObject(with: data))
+        multiplayerService?.messageTypes.forEach {
+            if let message = $0.decode(data) {
+                receiveDataDelegate?.didReceive(message: message, from: player)
+            }
         }
     }
 

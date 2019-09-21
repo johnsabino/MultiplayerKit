@@ -14,5 +14,8 @@ public extension String {
         }
         return 0
     }
+    var extractedNumbers: String {
+        return self.components(separatedBy: CharacterSet.decimalDigits.inverted).joined()
+    }
 
 }

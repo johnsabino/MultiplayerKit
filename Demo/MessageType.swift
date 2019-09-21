@@ -10,8 +10,6 @@ import MultiplayerKit
 struct StartGame: MessageProtocol { }
 struct Attack: MessageProtocol { }
 
-enum GameMessage: Message {
-    case move(pos: CGPoint, angle: CGFloat)
-    case message(msg: String)
-    case array(a: [CGFloat])
+final class CustomMultiplayerService: NSObject, MultiplayerService {
+    var messageTypes: [MessageProtocol.Type] = [Position.self, Attack.self, StartGame.self]
 }

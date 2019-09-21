@@ -46,7 +46,7 @@ class MenuScene: MPMenuScene {
         trainingButton.position.y = -100
         trainingButton.actionBlock = {
             guard let view = self.view else {return}
-            let gameScene = GameScene(size: view.frame.size)
+            let gameScene = GameScene(multiplayerService: CustomMultiplayerService())
             gameScene.isTraining = true
             gameScene.anchorPoint = CGPoint(x: 0.5, y: 0.5)
             gameScene.scaleMode = .resizeFill

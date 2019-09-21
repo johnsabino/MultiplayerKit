@@ -10,8 +10,10 @@ import SpriteKit
 import MultiplayerKit
 import GameKit
 
-//OBS: a cena do menu deve herdar de MPMenuScene
-class GameScene: SKScene, Multiplayer {
+//Precisa ser final class
+final class GameScene: SKScene, GameSceneProtocol {
+
+    var multiplayerService: MultiplayerService?
     var inputController: InputController!
     var isTraining = false
 
@@ -27,7 +29,6 @@ class GameScene: SKScene, Multiplayer {
         setupPlayers()
 
         physicsWorld.contactDelegate = self
-        matchService.receiveDataDelegate = self
     }
 
     func setupPlayers() {
@@ -37,8 +38,7 @@ class GameScene: SKScene, Multiplayer {
         playerNode.position = CGPoint.zero
         addChild(playerNode)
 
-        //OBS: é necessário configuar os outros jogadores para coloca-los na cena
-        players.forEach {
+        multiplayerService?.players.forEach {
             let player = SpaceShip(gkPlayer: $0,
                                    color: .purple,
                                    size: CGSize(width: 60, height: 60))
@@ -85,7 +85,7 @@ extension GameScene: JoystickDelegate {
                                 y: playerNode.position.y,
                                 angle: playerNode.zRotation)
 
-        send(position)
+        multiplayerService?.send(position)
 
     }
     func joystickDidEndTracking(direction: CGPoint) {
@@ -98,34 +98,27 @@ extension GameScene: JoystickDelegate {
 
 }
 
-// MARK: ReceiveDataDelegate
-extension GameScene: ReceiveDataDelegate {
+// MARK: ReceiveData
+extension GameScene {
 
-    func didReceive(message: [String: Any], from player: GKPlayer) {
+    func didReceive(message: MessageProtocol, from player: GKPlayer) {
         guard let playerNode = allPlayersNode[player] else { return }
 
-        message
-        .caseIs(Position.self) { content in
-            let point = CGPoint(x: content.x, y: content.y)
-            playerNode.changePlayer(position: point, angle: content.angle)
+        switch message {
+        case let position as Position:
+            let point = CGPoint(x: position.x, y: position.y)
+            playerNode.changePlayer(position: point, angle: position.angle)
+        case let startGame as StartGame:
+            print("START GAME!!! \(startGame)")
+        case let attack as Attack:
+            print("ATTACK!!! \(attack)")
+        default:
+            break
         }
-        .caseIs(StartGame.self) { _ in
-            print("START")
-        }
-        .caseIs(Attack.self) { _ in
-            print("ATTACK")
-        }
-
     }
 
-}
-
-// MARK: ConnectionDelegate
-extension GameScene: ConnectionDelegate {
     func didPlayerConnected() {
-
     }
-
 }
 
 // MARK: ContactDelegate

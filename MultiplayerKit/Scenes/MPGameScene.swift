@@ -9,6 +9,20 @@
 import SpriteKit
 import GameKit
 
+public protocol GameSceneProtocol: ReceiveDataDelegate, ConnectionDelegate {
+    var multiplayerService: MultiplayerService? {get set}
+    init()
+    init(multiplayerService: MultiplayerService?)
+}
+public extension GameSceneProtocol {
+
+    init(multiplayerService: MultiplayerService?) {
+        self.init()
+        multiplayerService?.matchService.receiveDataDelegate = self
+        multiplayerService?.matchService.connectionDelegate = self
+        self.multiplayerService = multiplayerService
+    }
+}
 open class MPGameScene: SKScene {
 
     public var allPlayersNode: [Int: MPSpriteNode] = [:]

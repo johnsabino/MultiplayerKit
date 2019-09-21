@@ -8,15 +8,31 @@
 
 import GameKit
 
-public protocol Multiplayer { }
+public protocol MultiplayerService: class {
+    /**
+     All messages types used to send and receive data.
+     Example:
+     [StartGame.self, Position.self, Attack.self]
+     */
+    var messageTypes: [MessageProtocol.Type] {get set}
+    //init()
+    //init<T: ReceiveDataDelegate>(multiplayerGameScene: T)
+}
 
-public extension Multiplayer {
+public extension MultiplayerService {
+//    init<T: ReceiveDataDelegate>(multiplayerGameScene: T) {
+//        self.init()
+//        matchService.receiveDataDelegate = multiplayerGameScene
+//    }
     var matchService: MatchService {
         return MatchService.shared
     }
-
+    /**
+     All players from the current match, except current device player
+     */
     var players: [GKPlayer] {
-        guard let match = Matchmaker.shared.currentMatch else { return [] }
+        guard let match = matchService.currentMatch else { return [] }
+        print("get p match: \(match) -- players: \(match.players.count)")
         return match.players
     }
 
@@ -27,8 +43,7 @@ public extension Multiplayer {
      */
     func send<T: MessageProtocol>(_ message: T, with mode: GKMatch.SendDataMode = .reliable) {
         do {
-            let dictionary = ["\(T.self)": message.asDictionary]
-            let dataEncoded = try JSONSerialization.data(withJSONObject: dictionary)
+            guard let dataEncoded = message.encode() else { return }
             try matchService.currentMatch?.sendData(toAllPlayers: dataEncoded, with: mode)
         } catch {
             print("Error while archive data and send: \(error)")

@@ -9,8 +9,8 @@
 import GameKit
 
 public class Matchmaker: NSObject, GKMatchmakerViewControllerDelegate {
-    public static let shared = Matchmaker()
 
+    var matchService: MatchService?
     public var authenticationViewController: UIViewController?
     public var currentMatch: GKMatch?
     var currentMatchmakerVC: GKMatchmakerViewController?
@@ -19,11 +19,15 @@ public class Matchmaker: NSObject, GKMatchmakerViewControllerDelegate {
         return GKLocalPlayer.local.isAuthenticated
     }
 
-    override init() {
+    public init(multiplayerService: MultiplayerService) {
+
+        self.matchService = multiplayerService.matchService
+        matchService?.multiplayerService = multiplayerService
+
+        //multiplayerService.matchService = matchService
         super.init()
 
         GKLocalPlayer.local.authenticateHandler = { authenticationVC, error in
-
             NotificationCenter.default.post(name: .authenticationChanged, object: self.isAuthenticated)
 
             if self.isAuthenticated {
@@ -58,7 +62,7 @@ public class Matchmaker: NSObject, GKMatchmakerViewControllerDelegate {
     public func matchmakerViewController(_ viewController: GKMatchmakerViewController, didFind match: GKMatch) {
 
         self.currentMatch = match
-        MatchService.shared.didGameStarted(match)
+        matchService?.didGameStarted(match)
 
         if let vc = currentMatchmakerVC {
             currentMatchmakerVC = nil
