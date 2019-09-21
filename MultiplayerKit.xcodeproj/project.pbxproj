@@ -40,6 +40,7 @@
 		6CA83ABA22FF7E95004C912A /* MultiplayerKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 6C99F96622FC99ED00B8C80B /* MultiplayerKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		6CA83AC022FF9057004C912A /* MPSpriteNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CA83ABF22FF9057004C912A /* MPSpriteNode.swift */; };
 		6CA83AC322FF986A004C912A /* String+ToInt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CA83AC222FF986A004C912A /* String+ToInt.swift */; };
+		6CA916BF2336988900765DBD /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6CCDFB3622FF6FA500DBCE3E /* GameKit.framework */; };
 		6CCDFB3722FF6FA500DBCE3E /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6CCDFB3622FF6FA500DBCE3E /* GameKit.framework */; };
 		6CEFC58E22FF28D100FA5D3A /* ConnectionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CEFC58D22FF28D100FA5D3A /* ConnectionDelegate.swift */; };
 /* End PBXBuildFile section */
@@ -120,6 +121,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6CA916BF2336988900765DBD /* GameKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

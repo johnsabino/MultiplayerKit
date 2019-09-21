@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <GameKit/GameKit.h>
 
 //! Project version number for MultiplayerKit.
 FOUNDATION_EXPORT double MultiplayerKitVersionNumber;

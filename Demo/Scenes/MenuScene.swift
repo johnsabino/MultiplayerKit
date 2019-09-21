@@ -7,7 +7,6 @@
 //
 
 import SpriteKit
-import GameKit
 import MultiplayerKit
 
 /*OBS: a cena do menu deve herdar de MPMenuScene

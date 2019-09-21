@@ -8,7 +8,6 @@
 
 import SpriteKit
 import MultiplayerKit
-import GameKit
 
 //Precisa ser final class
 final class GameScene: SKScene, GameSceneProtocol {
