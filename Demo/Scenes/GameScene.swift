@@ -10,18 +10,31 @@ import SpriteKit
 import MultiplayerKit
 
 //Precisa ser final class
-final class GameScene: SKScene, GameSceneProtocol {
+class GameScene: SKScene, MKGameScene {
 
-    var multiplayerService: MultiplayerService?
+    var multiplayerService = MultiplayerService(Position.self, Attack.self, StartGame.self)
     var inputController: InputController!
     var isTraining = false
 
     var playerNode: SpaceShip!
     var allPlayersNode: [GKPlayer: SpaceShip] = [:]
 
+    init(isTraining: Bool = false) {
+        self.isTraining = isTraining
+        super.init(size: .zero)
+        multiplayerService.gameScene = self
+        anchorPoint = CGPoint(x: 0.5, y: 0.5)
+        scaleMode = .resizeFill
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func didMove(to view: SKView) {
         super.didMove(to: view)
-
+        view.showsPhysics = true
+        view.ignoresSiblingOrder = true
         backgroundColor = .white
         setupCamera()
         setupJoystick()
@@ -37,7 +50,7 @@ final class GameScene: SKScene, GameSceneProtocol {
         playerNode.position = CGPoint.zero
         addChild(playerNode)
 
-        multiplayerService?.players.forEach {
+        multiplayerService.players.forEach {
             let player = SpaceShip(gkPlayer: $0,
                                    color: .purple,
                                    size: CGSize(width: 60, height: 60))
@@ -84,7 +97,7 @@ extension GameScene: JoystickDelegate {
                                 y: playerNode.position.y,
                                 angle: playerNode.zRotation)
 
-        multiplayerService?.send(position)
+        multiplayerService.send(position)
 
     }
     func joystickDidEndTracking(direction: CGPoint) {
@@ -147,4 +160,17 @@ extension GameScene: SKPhysicsContactDelegate {
         }
 
     }
+}
+
+class Other: SKScene, MKGameScene {
+    var multiplayerService: MultiplayerService = MultiplayerService(Position.self)
+    
+    func didReceive(message: MessageProtocol, from player: GKPlayer) {
+
+    }
+    
+    func didPlayerConnected() {
+        
+    }
+
 }

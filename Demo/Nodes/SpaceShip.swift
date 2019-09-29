@@ -40,9 +40,6 @@ class SpaceShip: MPSpriteNode {
         bullet.run(move) {
             bullet.removeFromParent()
         }
-
-        //OBS: precisa enviar a mensagem de ataque
-        //send(message: Attack())
     }
 
     func instantiateBullet(in scene: SKScene) -> SKSpriteNode {
@@ -66,8 +63,6 @@ class SpaceShip: MPSpriteNode {
             print("E MORREU...")
             removeFromParent()
         }
-
-        //send(message: ["action": "hitted"])
     }
 
 }

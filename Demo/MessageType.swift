@@ -9,7 +9,3 @@ import MultiplayerKit
 
 struct StartGame: MessageProtocol { }
 struct Attack: MessageProtocol { }
-
-final class CustomMultiplayerService: NSObject, MultiplayerService {
-    var messageTypes: [MessageProtocol.Type] = [Position.self, Attack.self, StartGame.self]
-}

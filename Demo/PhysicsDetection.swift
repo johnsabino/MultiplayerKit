@@ -21,8 +21,6 @@ class PhysicsDetection: NSObject, SKPhysicsContactDelegate {
     //var player: CharacterNode?
 
     func didBegin(_ contact: SKPhysicsContact) {
-        print("COLISAO GENERICA")
-
         let collision: UInt32 = contact.bodyA.categoryBitMask | contact.bodyB.categoryBitMask
 
         if collision == ColliderType.player | ColliderType.bullet {

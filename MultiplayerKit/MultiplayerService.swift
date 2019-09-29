@@ -8,31 +8,23 @@
 
 import GameKit
 
-public protocol MultiplayerService: class {
-    /**
-     All messages types used to send and receive data.
-     Example:
-     [StartGame.self, Position.self, Attack.self]
-     */
-    var messageTypes: [MessageProtocol.Type] {get set}
-    //init()
-    //init<T: ReceiveDataDelegate>(multiplayerGameScene: T)
-}
-
-public extension MultiplayerService {
-//    init<T: ReceiveDataDelegate>(multiplayerGameScene: T) {
-//        self.init()
-//        matchService.receiveDataDelegate = multiplayerGameScene
-//    }
-    var matchService: MatchService {
-        return MatchService.shared
+public class MultiplayerService: NSObject {
+    let messageTypes: [MessageProtocol.Type]
+    
+    public weak var gameScene: MKGameScene? {
+        didSet {
+            MatchService.shared.setGameScene(gameScene)
+        }
     }
+    public init(_ messageTypes: MessageProtocol.Type ...) {
+        self.messageTypes = messageTypes
+    }
+    
     /**
-     All players from the current match, except current device player
+     All players from the current match, except player of current device
      */
-    var players: [GKPlayer] {
-        guard let match = matchService.currentMatch else { return [] }
-        print("get p match: \(match) -- players: \(match.players.count)")
+    public var players: [GKPlayer] {
+        guard let match = MatchService.shared.currentMatch else { return [] }
         return match.players
     }
 
@@ -41,10 +33,10 @@ public extension MultiplayerService {
      - parameter data: the message to be send.
      - parameter mode: The mechanism used to send the data. The default is reliable
      */
-    func send<T: MessageProtocol>(_ message: T, with mode: GKMatch.SendDataMode = .reliable) {
+    public func send<T: MessageProtocol>(_ message: T, with mode: GKMatch.SendDataMode = .reliable) {
         do {
             guard let dataEncoded = message.encode() else { return }
-            try matchService.currentMatch?.sendData(toAllPlayers: dataEncoded, with: mode)
+            try MatchService.shared.currentMatch?.sendData(toAllPlayers: dataEncoded, with: mode)
         } catch {
             print("Error while archive data and send: \(error)")
         }

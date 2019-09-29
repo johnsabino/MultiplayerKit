@@ -8,19 +8,26 @@
 
 import GameKit
 
-public class MatchService: NSObject, GKMatchDelegate {
+class MatchService: NSObject, GKMatchDelegate {
     static let shared = MatchService()
     weak var multiplayerService: MultiplayerService?
-    public var currentMatch: GKMatch?
-    public weak var connectionDelegate: ConnectionDelegate?
-    public weak var receiveDataDelegate: ReceiveDataDelegate?
+    var currentMatch: GKMatch?
+    
+    weak var connectionDelegate: ConnectionDelegate?
+    weak var receiveDataDelegate: ReceiveDataDelegate?
+    weak var gamePresentationDelegate: GamePresentationDelegate?
 
     override public init() {
         super.init()
-        print("INIT MATCH SERVICE")
     }
+
+    func setGameScene(_ gameScene: MKGameScene?) {
+        connectionDelegate = gameScene
+        receiveDataDelegate = gameScene
+        multiplayerService = gameScene?.multiplayerService
+    }
+    
     public func match(_ match: GKMatch, didReceive data: Data, fromRemotePlayer player: GKPlayer) {
-        //print("JSON: ", try? JSONSerialization.jsonObject(with: data))
         multiplayerService?.messageTypes.forEach {
             if let message = $0.decode(data) {
                 receiveDataDelegate?.didReceive(message: message, from: player)
@@ -44,9 +51,12 @@ public class MatchService: NSObject, GKMatchDelegate {
     }
 
     func didGameStarted(_ match: GKMatch) {
-        print("START GAME")
         self.currentMatch = match
         match.delegate = self
-        NotificationCenter.default.post(name: .presentGame, object: match)
+        gamePresentationDelegate?.willStartGame()
+    }
+    
+    func setMatchDelegate(_ multiplayerService: MultiplayerService) {
+        
     }
 }

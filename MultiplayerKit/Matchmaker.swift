@@ -10,40 +10,41 @@ import GameKit
 
 public class Matchmaker: NSObject, GKMatchmakerViewControllerDelegate {
 
-    var matchService: MatchService?
+    public enum AuthenticationState {
+        case authenticated
+        case nonAuthenticated
+    }
+
     public var authenticationViewController: UIViewController?
     public var currentMatch: GKMatch?
     var currentMatchmakerVC: GKMatchmakerViewController?
-
+    weak var authenticationDelegate: AuthenticationDelegate?
     var isAuthenticated: Bool {
         return GKLocalPlayer.local.isAuthenticated
     }
 
-    public init(multiplayerService: MultiplayerService) {
-
-        self.matchService = multiplayerService.matchService
-        matchService?.multiplayerService = multiplayerService
-
-        //multiplayerService.matchService = matchService
+    public init(authenticationViewController: UIViewController) {
+        self.authenticationViewController = authenticationViewController
         super.init()
-
         GKLocalPlayer.local.authenticateHandler = { authenticationVC, error in
             NotificationCenter.default.post(name: .authenticationChanged, object: self.isAuthenticated)
 
             if self.isAuthenticated {
+                self.authenticationDelegate?.didAuthenticationChanged(to: .authenticated)
                 GKLocalPlayer.local.register(self)
                 print("Authenticated to Game Center!")
 
             } else if let vc = authenticationVC {
                 self.authenticationViewController?.present(vc, animated: true)
             } else {
+                self.authenticationDelegate?.didAuthenticationChanged(to: .nonAuthenticated)
                 print("Error authentication to GameCenter: \(error?.localizedDescription ?? "none")")
             }
 
         }
     }
 
-    public func presentMatchMaker(minPlayers: Int = 2, maxPlayers: Int = 4, defaultNumberOfPlayers: Int = 4) {
+    public func present(minPlayers: Int = 2, maxPlayers: Int = 4, defaultNumberOfPlayers: Int = 4) {
         if !isAuthenticated {return}
 
         let request = GKMatchRequest()
@@ -62,7 +63,7 @@ public class Matchmaker: NSObject, GKMatchmakerViewControllerDelegate {
     public func matchmakerViewController(_ viewController: GKMatchmakerViewController, didFind match: GKMatch) {
 
         self.currentMatch = match
-        matchService?.didGameStarted(match)
+        MatchService.shared.didGameStarted(match)
 
         if let vc = currentMatchmakerVC {
             currentMatchmakerVC = nil

@@ -36,7 +36,7 @@ open class MPMenuScene: SKScene {
     }
 
     public func presentMatchMaker() {
-        matchmaker.presentMatchMaker()
+        matchmaker.present()
     }
 
     @objc open func presentGame(_ notification: Notification) {
