@@ -18,8 +18,6 @@ struct ColliderType {
 }
 
 class PhysicsDetection: NSObject, SKPhysicsContactDelegate {
-    //var player: CharacterNode?
-
     func didBegin(_ contact: SKPhysicsContact) {
         let collision: UInt32 = contact.bodyA.categoryBitMask | contact.bodyB.categoryBitMask
 

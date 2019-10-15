@@ -9,7 +9,6 @@
 import SpriteKit
 import MultiplayerKit
 
-//Precisa ser final class
 class GameScene: SKScene, MKGameScene {
 
     var multiplayerService = MultiplayerService(Position.self, Attack.self, StartGame.self)
@@ -33,7 +32,6 @@ class GameScene: SKScene, MKGameScene {
     
     override func didMove(to view: SKView) {
         super.didMove(to: view)
-        view.showsPhysics = true
         view.ignoresSiblingOrder = true
         backgroundColor = .white
         setupCamera()
@@ -57,13 +55,14 @@ class GameScene: SKScene, MKGameScene {
             allPlayersNode[$0] = player
             addChild(player)
         }
-//        if isTraining {
-//            let player2 = SpaceShip(gkPlayer: GKPlayer(),
-//                                    color: .purple,
-//                                    size: CGSize(width: 60, height: 60))
-//            player2.position = CGPoint.zero
-//            addChild(player2)
-//        }
+
+        if isTraining {
+            let player2 = SpaceShip(gkPlayer: GKPlayer(),
+                                    color: .purple,
+                                    size: CGSize(width: 60, height: 60))
+            player2.position = CGPoint.zero
+            addChild(player2)
+        }
     }
 
     func setupCamera() {
