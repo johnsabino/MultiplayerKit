@@ -7,5 +7,15 @@
 //
 import MultiplayerKit
 
-struct StartGame: MessageProtocol { }
+struct StartGame: MessageProtocol {
+    var startPosition: CGPoint
+    var playerColorR: CGFloat
+    var playerColorG: CGFloat
+    var playerColorB: CGFloat
+}
+
+struct Position: MessageProtocol {
+    var point: CGPoint, angle: CGFloat
+}
+
 struct Attack: MessageProtocol { }

@@ -92,8 +92,7 @@ extension GameScene: JoystickDelegate {
         playerNode.physicsBody?.velocity = CGVector(dx: direction.x * 3, dy: direction.y * 3)
         playerNode.zRotation = angle
 
-        let position = Position(x: playerNode.position.x,
-                                y: playerNode.position.y,
+        let position = Position(point: playerNode.position,
                                 angle: playerNode.zRotation)
 
         multiplayerService.send(position)
@@ -117,8 +116,7 @@ extension GameScene {
 
         switch message {
         case let position as Position:
-            let point = CGPoint(x: position.x, y: position.y)
-            playerNode.changePlayer(position: point, angle: position.angle)
+            playerNode.changePlayer(position: position.point, angle: position.angle)
         case let startGame as StartGame:
             print("START GAME!!! \(startGame)")
         case let attack as Attack:
