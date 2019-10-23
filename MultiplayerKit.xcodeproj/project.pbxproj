@@ -15,6 +15,7 @@
 		6C3EF8142340E1C7003A3C86 /* MKMenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C3EF8132340E1C7003A3C86 /* MKMenuScene.swift */; };
 		6C3EF8162340E343003A3C86 /* AuthenticationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C3EF8152340E343003A3C86 /* AuthenticationDelegate.swift */; };
 		6C3EF8182340E531003A3C86 /* GamePresentationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C3EF8172340E531003A3C86 /* GamePresentationDelegate.swift */; };
+		6C45CA3A2360A1BF000BDB7D /* MPSpriteNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CA83ABF22FF9057004C912A /* MPSpriteNode.swift */; };
 		6C619D1D2308804C0082D672 /* MessageProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C619D1C2308804C0082D672 /* MessageProtocol.swift */; };
 		6C6EEAF922FF3CBA00996FC8 /* JoystickNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C6EEAF422FF3CBA00996FC8 /* JoystickNode.swift */; };
 		6C6EEAFA22FF3CBA00996FC8 /* VirtualButtonNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C6EEAF522FF3CBA00996FC8 /* VirtualButtonNode.swift */; };
@@ -39,7 +40,6 @@
 		6CA83A6722FF7A97004C912A /* MultiplayerKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C99F96622FC99ED00B8C80B /* MultiplayerKit.framework */; };
 		6CA83AB022FF7CA0004C912A /* MultiplayerKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C99F96622FC99ED00B8C80B /* MultiplayerKit.framework */; };
 		6CA83ABA22FF7E95004C912A /* MultiplayerKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 6C99F96622FC99ED00B8C80B /* MultiplayerKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		6CA83AC022FF9057004C912A /* MPSpriteNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CA83ABF22FF9057004C912A /* MPSpriteNode.swift */; };
 		6CA83AC322FF986A004C912A /* String+ToInt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CA83AC222FF986A004C912A /* String+ToInt.swift */; };
 		6CA916BF2336988900765DBD /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6CCDFB3622FF6FA500DBCE3E /* GameKit.framework */; };
 		6CCDFB3722FF6FA500DBCE3E /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6CCDFB3622FF6FA500DBCE3E /* GameKit.framework */; };
@@ -147,17 +147,10 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		6C0486E923071B4A009A888C /* MPNodes */ = {
-			isa = PBXGroup;
-			children = (
-				6CA83ABF22FF9057004C912A /* MPSpriteNode.swift */,
-			);
-			path = MPNodes;
-			sourceTree = "<group>";
-		};
 		6C0486EA23071B61009A888C /* Nodes */ = {
 			isa = PBXGroup;
 			children = (
+				6CA83ABF22FF9057004C912A /* MPSpriteNode.swift */,
 				6C0486EB23071BA7009A888C /* SpaceShip.swift */,
 			);
 			path = Nodes;
@@ -219,7 +212,6 @@
 			isa = PBXGroup;
 			children = (
 				6CA83AC122FF9845004C912A /* Utils */,
-				6C0486E923071B4A009A888C /* MPNodes */,
 				6C6EEB7A22FF4FFB00996FC8 /* Scenes */,
 				6C99F96922FC99ED00B8C80B /* MultiplayerKit.h */,
 				6C99F96A22FC99ED00B8C80B /* Info.plist */,
@@ -481,7 +473,6 @@
 				6C7031EE22FE047E005055B0 /* MultiplayerService.swift in Sources */,
 				6C7031EC22FE047E005055B0 /* NotificationName.swift in Sources */,
 				6C3EF8162340E343003A3C86 /* AuthenticationDelegate.swift in Sources */,
-				6CA83AC022FF9057004C912A /* MPSpriteNode.swift in Sources */,
 				6CA83AC322FF986A004C912A /* String+ToInt.swift in Sources */,
 				6C619D1D2308804C0082D672 /* MessageProtocol.swift in Sources */,
 				6C2FCBFC2311E7090086DA77 /* MatchService.swift in Sources */,
@@ -506,6 +497,7 @@
 			files = (
 				6C6EEAFB22FF3CBA00996FC8 /* InputController.swift in Sources */,
 				6C6EEAFC22FF3CBA00996FC8 /* JoystickComponent.swift in Sources */,
+				6C45CA3A2360A1BF000BDB7D /* MPSpriteNode.swift in Sources */,
 				6C99F98D22FC9A0B00B8C80B /* GameScene.swift in Sources */,
 				6C6EEAFA22FF3CBA00996FC8 /* VirtualButtonNode.swift in Sources */,
 				6C6EEAFD22FF3CBA00996FC8 /* JoystickDelegate.swift in Sources */,
