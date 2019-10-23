@@ -7,7 +7,7 @@
 //
 
 import SpriteKit
-import GameKit
+import MultiplayerKit
 
 open class MPSpriteNode: SKSpriteNode {
     public var gkPlayer: GKPlayer
