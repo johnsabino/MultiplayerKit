@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'MultiplayerKit'
-  s.version          = '0.1.0'
+  s.version          = '0.1.1'
   s.summary          = 'A framework to improve Multiplayer Games development in iOS.'
   s.swift_version = '5.0'
 # This description is used to generate tags and improve search results.
@@ -31,7 +31,7 @@ Framework that facilitates Multiplayer Games development in iOS Devices.
   s.ios.deployment_target = '8.0'
 
   s.source_files = 'MultiplayerKit/**/*'
-  
+  s.exclude_files = "MultiplayerKit/*.plist"
   # s.resource_bundles = {
   #   'MultiplayerKit' => ['MultiplayerKit/Assets/*.png']
   # }
