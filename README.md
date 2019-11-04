@@ -4,6 +4,8 @@
 [![License](https://img.shields.io/cocoapods/l/MultiplayerKit.svg?style=flat)](https://cocoapods.org/pods/MultiplayerKit)
 [![Platform](https://img.shields.io/cocoapods/p/MultiplayerKit.svg?style=flat)](https://cocoapods.org/pods/MultiplayerKit)
 
+MultiplayerKit is a framework that facilitates Multiplayer Games development in iOS Devices.
+
 ## Example
 
 To run the example project, clone the repo, and run `pod install` from the Example directory first.
