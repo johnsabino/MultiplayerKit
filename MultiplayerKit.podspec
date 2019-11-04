@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'MultiplayerKit'
-  s.version          = '0.1.1'
+  s.version          = '0.1.2'
   s.summary          = 'A framework to improve Multiplayer Games development in iOS.'
   s.swift_version = '5.0'
 # This description is used to generate tags and improve search results.
