@@ -31,7 +31,7 @@ open class MPSpriteNode: SKSpriteNode {
         fatalError("init(coder:) has not been implemented")
     }
 
-    public func send<T: MessageProtocol>(message: T) {
+    public func send<T: Message>(message: T) {
        // if isLocalPlayer { mpKit.send(message) }
     }
 

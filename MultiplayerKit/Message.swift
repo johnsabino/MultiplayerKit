@@ -6,9 +6,9 @@
 //  Copyright © 2019 João Paulo de Oliveira Sabino. All rights reserved.
 //
 
-public protocol MessageProtocol: Codable { }
+public protocol Message: Codable { }
 
-extension MessageProtocol {
+extension Message {
 
     var dictionary: [String: Any] {
         let encode = try? JSONSerialization.jsonObject(with: JSONEncoder().encode(self))

@@ -111,7 +111,7 @@ extension GameScene: JoystickDelegate {
 // MARK: ReceiveData
 extension GameScene {
 
-    func didReceive(message: MessageProtocol, from player: GKPlayer) {
+    func didReceive(message: Message, from player: GKPlayer) {
         guard let playerNode = allPlayersNode[player] else { return }
 
         switch message {
@@ -162,7 +162,7 @@ extension GameScene: SKPhysicsContactDelegate {
 class Other: SKScene, MKGameScene {
     var multiplayerService: MultiplayerService = MultiplayerService(Position.self)
     
-    func didReceive(message: MessageProtocol, from player: GKPlayer) {
+    func didReceive(message: Message, from player: GKPlayer) {
 
     }
     

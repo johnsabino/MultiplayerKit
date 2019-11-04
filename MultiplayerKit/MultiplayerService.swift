@@ -9,14 +9,14 @@
 import GameKit
 
 public class MultiplayerService: NSObject {
-    let messageTypes: [MessageProtocol.Type]
+    let messageTypes: [Message.Type]
     
     public weak var gameScene: MKGameScene? {
         didSet {
             MatchService.shared.setGameScene(gameScene)
         }
     }
-    public init(_ messageTypes: MessageProtocol.Type ...) {
+    public init(_ messageTypes: Message.Type ...) {
         self.messageTypes = messageTypes
     }
     
@@ -33,7 +33,7 @@ public class MultiplayerService: NSObject {
      - parameter data: the message to be send.
      - parameter mode: The mechanism used to send the data. The default is reliable
      */
-    public func send<T: MessageProtocol>(_ message: T, with mode: GKMatch.SendDataMode = .reliable) {
+    public func send<T: Message>(_ message: T, with mode: GKMatch.SendDataMode = .reliable) {
         do {
             guard let dataEncoded = message.encode() else { return }
             try MatchService.shared.currentMatch?.sendData(toAllPlayers: dataEncoded, with: mode)
