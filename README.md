@@ -1,6 +1,5 @@
 # MultiplayerKit
 
-[![CI Status](https://img.shields.io/travis/jonhpol/MultiplayerKit.svg?style=flat)](https://travis-ci.org/jonhpol/MultiplayerKit)
 [![Version](https://img.shields.io/cocoapods/v/MultiplayerKit.svg?style=flat)](https://cocoapods.org/pods/MultiplayerKit)
 [![License](https://img.shields.io/cocoapods/l/MultiplayerKit.svg?style=flat)](https://cocoapods.org/pods/MultiplayerKit)
 [![Platform](https://img.shields.io/cocoapods/p/MultiplayerKit.svg?style=flat)](https://cocoapods.org/pods/MultiplayerKit)
