@@ -14,7 +14,7 @@ class GameScene: SKScene, MKGameScene {
     var multiplayerService = MultiplayerService(Position.self, Attack.self, StartGame.self)
     var inputController: InputController!
     var isTraining = false
-
+    var background = SKSpriteNode(texture: SKTexture(imageNamed: "desert-backgorund"))
     var playerNode: SpaceShip!
     var allPlayersNode: [GKPlayer: SpaceShip] = [:]
 
@@ -34,33 +34,36 @@ class GameScene: SKScene, MKGameScene {
         super.didMove(to: view)
         view.ignoresSiblingOrder = true
         backgroundColor = .white
+        setupBackground()
         setupCamera()
         setupJoystick()
         setupPlayers()
-
         physicsWorld.contactDelegate = self
     }
 
+    func setupBackground() {
+        background.position = .zero
+        background.texture?.filteringMode = .nearest
+        if let backGTexture = background.texture {
+            background.size = CGSize(width: backGTexture.size().width * 3, height: backGTexture.size().height * 3)
+        }
+        addChild(background)
+    }
     func setupPlayers() {
-        playerNode = SpaceShip(gkPlayer: GKLocalPlayer.local,
-                               color: .purple,
-                               size: CGSize(width: 60, height: 60))
-        playerNode.position = CGPoint.zero
+        playerNode = SpaceShip(gkPlayer: GKLocalPlayer.local, texture: SKTexture(imageNamed: "ship"))
+        playerNode.position = .zero
         addChild(playerNode)
 
         multiplayerService.players.forEach {
-            let player = SpaceShip(gkPlayer: $0,
-                                   color: .purple,
-                                   size: CGSize(width: 60, height: 60))
+            let player = SpaceShip(gkPlayer: GKLocalPlayer.local, texture: SKTexture(imageNamed: "ship"))
             allPlayersNode[$0] = player
             addChild(player)
         }
 
         if isTraining {
-            let player2 = SpaceShip(gkPlayer: GKPlayer(),
-                                    color: .purple,
-                                    size: CGSize(width: 60, height: 60))
-            player2.position = CGPoint.zero
+            let player2 = SpaceShip(gkPlayer: GKLocalPlayer.local, texture: SKTexture(imageNamed: "ship"))
+            player2.name = "enemyPlayer"
+            player2.position = .zero
             addChild(player2)
         }
     }
@@ -88,10 +91,7 @@ class GameScene: SKScene, MKGameScene {
 extension GameScene: JoystickDelegate {
     func joystickUpdateTracking(direction: CGPoint, angle: CGFloat) {
         //movimentação local do jogador
-
-        playerNode.physicsBody?.velocity = CGVector(dx: direction.x * 3, dy: direction.y * 3)
-        playerNode.zRotation = angle
-
+        playerNode.movePlayer(toDirection: direction, andAngle: angle)
         let position = Position(point: playerNode.position,
                                 angle: playerNode.zRotation)
 
@@ -146,10 +146,10 @@ extension GameScene: SKPhysicsContactDelegate {
             guard let playerNode = (categoryA == ColliderType.player ? nodeA : nodeB) as? SpaceShip
                 else { return }
             guard let bulletNode = categoryA == ColliderType.bullet ? nodeA : nodeB else { return }
-
-            bulletNode.removeFromParent()
-
-            if playerNode.name == "allyPlayer" && bulletNode.name == "enemyBullet" {
+            if (playerNode.name == "allyPlayer" && bulletNode.name == "enemyBullet") ||
+                (playerNode.name == "enemyPlayer" && bulletNode.name == "allyBullet") {
+                print("HIT")
+                bulletNode.removeFromParent()
                 playerNode.receiveDamage()
 
             }
