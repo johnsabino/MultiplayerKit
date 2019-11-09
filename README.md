@@ -33,7 +33,7 @@ final class MenuScene: SKScene, MKMenuScene {
     
     func willStartGame() {
         //Presenting Scene example:
-        view?.presentScene(GameScene(), transition: SKTransition.crossFade(withDuration: 1.0))
+        view?.presentScene(GameScene(), transition: .crossFade(withDuration: 1.0))
     }
 }
 
