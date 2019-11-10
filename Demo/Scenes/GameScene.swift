@@ -55,7 +55,7 @@ class GameScene: SKScene, MKGameScene {
         addChild(playerNode)
 
         multiplayerService.players.forEach {
-            let player = SpaceShip(gkPlayer: GKLocalPlayer.local, texture: SKTexture(imageNamed: "ship"))
+            let player = SpaceShip(gkPlayer: $0, texture: SKTexture(imageNamed: "ship"))
             allPlayersNode[$0] = player
             addChild(player)
         }
