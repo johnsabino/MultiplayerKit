@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		6C0486EC23071BA7009A888C /* SpaceShip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C0486EB23071BA7009A888C /* SpaceShip.swift */; };
 		6C0486EE23071CF9009A888C /* PhysicsDetection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C0486ED23071CF9009A888C /* PhysicsDetection.swift */; };
+		6C1BE5A42377874800265F7F /* SKSpriteNode+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C1BE5A32377874800265F7F /* SKSpriteNode+Extension.swift */; };
 		6C206C70230B824E008B302E /* MessageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C206C6F230B824E008B302E /* MessageType.swift */; };
 		6C2FCBFA2311E6B00086DA77 /* Matchmaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C2FCBF92311E6B00086DA77 /* Matchmaker.swift */; };
 		6C2FCBFC2311E7090086DA77 /* MatchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C2FCBFB2311E7090086DA77 /* MatchService.swift */; };
@@ -80,6 +81,7 @@
 /* Begin PBXFileReference section */
 		6C0486EB23071BA7009A888C /* SpaceShip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpaceShip.swift; sourceTree = "<group>"; };
 		6C0486ED23071CF9009A888C /* PhysicsDetection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysicsDetection.swift; sourceTree = "<group>"; };
+		6C1BE5A32377874800265F7F /* SKSpriteNode+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SKSpriteNode+Extension.swift"; sourceTree = "<group>"; };
 		6C206C6F230B824E008B302E /* MessageType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageType.swift; sourceTree = "<group>"; };
 		6C2FCBF92311E6B00086DA77 /* Matchmaker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Matchmaker.swift; sourceTree = "<group>"; };
 		6C2FCBFB2311E7090086DA77 /* MatchService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchService.swift; sourceTree = "<group>"; };
@@ -154,6 +156,14 @@
 				6C0486EB23071BA7009A888C /* SpaceShip.swift */,
 			);
 			path = Nodes;
+			sourceTree = "<group>";
+		};
+		6C1BE5A22377873500265F7F /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				6C1BE5A32377874800265F7F /* SKSpriteNode+Extension.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		6C6EEAF322FF3CBA00996FC8 /* Joystick */ = {
@@ -237,6 +247,7 @@
 		6C99F98522FC9A0B00B8C80B /* Demo */ = {
 			isa = PBXGroup;
 			children = (
+				6C1BE5A22377873500265F7F /* Extensions */,
 				6C206C6F230B824E008B302E /* MessageType.swift */,
 				6C0486EA23071B61009A888C /* Nodes */,
 				6C6EEAF322FF3CBA00996FC8 /* Joystick */,
@@ -505,6 +516,7 @@
 				6C6EEB0722FF3F8C00996FC8 /* ConnectionDelegate.swift in Sources */,
 				6C206C70230B824E008B302E /* MessageType.swift in Sources */,
 				6C99F98F22FC9A0B00B8C80B /* GameViewController.swift in Sources */,
+				6C1BE5A42377874800265F7F /* SKSpriteNode+Extension.swift in Sources */,
 				6C99F98722FC9A0B00B8C80B /* AppDelegate.swift in Sources */,
 				6C0486EC23071BA7009A888C /* SpaceShip.swift in Sources */,
 				6C0486EE23071CF9009A888C /* PhysicsDetection.swift in Sources */,

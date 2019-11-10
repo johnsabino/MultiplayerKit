@@ -15,7 +15,6 @@ class SpaceShip: MPSpriteNode {
 
     override init(gkPlayer: GKPlayer, texture: SKTexture? = nil, color: UIColor, size: CGSize) {
         super.init(gkPlayer: gkPlayer, texture: texture, color: color, size: size)
-
         zPosition = 2
         name = isLocalPlayer ? "allyPlayer" : "enemyPlayer"
         let pb = SKPhysicsBody(rectangleOf: size)
@@ -25,16 +24,29 @@ class SpaceShip: MPSpriteNode {
         pb.collisionBitMask = ColliderType.none
         physicsBody = pb
     }
-
+    
+    convenience init(gkPlayer: GKPlayer, texture: SKTexture) {
+        texture.filteringMode = .nearest
+        let size = CGSize(width: texture.size().width * 2, height: texture.size().height * 2)
+        self.init(gkPlayer: gkPlayer, texture: texture, color: .clear, size: size)
+    }
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func movePlayer(toDirection: CGPoint, andAngle: CGFloat) {
+        physicsBody?.velocity = CGVector(dx: toDirection.x * 3, dy: toDirection.y * 3)
+        zRotation = andAngle
     }
 
     func shoot(in scene: SKScene) {
         if hp <= 0 { return }
         let bullet = instantiateBullet(in: scene)
-        addChild(bullet)
-        let point = CGPoint(x: bullet.position.x * 10, y: bullet.position.y * 10)
+        scene.addChild(bullet)
+        let distance: CGFloat = 300
+        let point = CGPoint(x: distance * cos(zRotation + (CGFloat.pi/2)) + bullet.position.x,
+                            y: distance * sin(zRotation + (CGFloat.pi/2)) + bullet.position.y)
         let move = SKAction.move(to: point, duration: 1)
 
         bullet.run(move) {
@@ -43,9 +55,10 @@ class SpaceShip: MPSpriteNode {
     }
 
     func instantiateBullet(in scene: SKScene) -> SKSpriteNode {
-        let bullet = SKSpriteNode(color: .red, size: CGSize(width: 10, height: 10))
-        bullet.position = convert(position, from: scene)
-        bullet.position.y += 50
+        let bullet = SKSpriteNode(texture: SKTexture(imageNamed: "bullet"), scale: 2)
+        bullet.zPosition = 1
+        bullet.zRotation = zRotation
+        bullet.position = position
         bullet.name = isLocalPlayer ? "allyBullet" : "enemyBullet"
         let pb = SKPhysicsBody(rectangleOf: bullet.size)
         pb.affectedByGravity = false
@@ -60,7 +73,7 @@ class SpaceShip: MPSpriteNode {
     func receiveDamage() {
         hp -= 10
         if hp <= 0 {
-            print("E MORREU...")
+            print("DIED...")
             removeFromParent()
         }
     }
