@@ -10,8 +10,6 @@ MultiplayerKit is a framework that facilitates Multiplayer Games development in 
 
 To run the example project, clone the repo, and run `pod install` from the Example directory first.
 
-## Requirements
-
 ## Installation
 
 MultiplayerKit is available through [CocoaPods](https://cocoapods.org). To install
@@ -104,6 +102,10 @@ The method `didReceive(message: Message, from player: GKPlayer)` in GameScene is
 ## Author
 
 jonhpol, j.paulo_os@hotmail.com
+
+## Credits
+
+Artwork in demo project created by Luis Zuno (@ansimuz)
 
 ## License
 
