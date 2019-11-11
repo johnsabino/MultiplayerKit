@@ -49,6 +49,27 @@ class GameScene: SKScene, MKGameScene {
 ```diff
 ! MenuScene must be final class
 ```
+To present matchmaker, call the function presentMatchmaker in MenuScene, or associate to a button action. Example:
+
+```swift
+startButton.actionBlock = presentMatchMaker
+```
+
+After Game Scene conforms to MKGameScene, you must associate the scene:
+
+```swift
+multiplayerService.gameScene = self
+```
+
+You can access all player in the match through `multiplayerService.players`. Example allocating all players in the scene:
+
+```swift
+multiplayerService.players.forEach {
+    let player = SpaceShip(gkPlayer: $0, texture: SKTexture(imageNamed: "ship"))
+    allPlayersNode[$0] = player
+    addChild(player)
+}
+```
 
 In GameViewController instantiate the Matchmaker and Menu Scene
 
@@ -75,7 +96,7 @@ struct Position: Message {
 In your GameScene call the method `send(_ message: Message)` of MultiplayerService. Example:
 
 ```swift
-let position = Position(point: playerPosition, angle: playerAngle)
+let position = Position(point: playerNode.position, angle: playerNode.zRotation)
 multiplayerService.send(position)
 ```
 
