@@ -54,6 +54,14 @@ class GameScene: SKScene, MKGameScene {
 ```diff
 ! MenuScene must be final class
 ```
+In `willStartGame()` method present the scene:
+
+```swift
+func willStartGame() {
+    view?.presentScene(GameScene(), transition: .crossFade(withDuration: 1.0))
+}
+```
+
 To present matchmaker, call the function presentMatchmaker in MenuScene, or associate to a button action. Example:
 
 ```swift
@@ -72,10 +80,13 @@ override func didMove(to view: SKView) {
 You can access all player in the match through `multiplayerService.players`. Example allocating all players in the scene:
 
 ```swift
-multiplayerService.players.forEach {
-    let player = SpaceShip(gkPlayer: $0, texture: SKTexture(imageNamed: "ship"))
-    allPlayersNode[$0] = player
-    addChild(player)
+func setupPlayers() {
+    //...
+    multiplayerService.players.forEach {
+        let player = SpaceShip(gkPlayer: $0, texture: SKTexture(imageNamed: "ship"))
+        allPlayersNode[$0] = player
+        addChild(player)
+    }
 }
 ```
 
@@ -104,13 +115,13 @@ struct Position: Message {
 In your GameScene call the method `send(_ message: Message)` of MultiplayerService. Example:
 
 ```swift
-let position = Position(point: playerNode.position, angle: playerNode.zRotation)
+let position = Position(point: position, angle: angle)
 multiplayerService.send(position)
 ```
 
 # Receive Messages
 
-The method `didReceive(message: Message, from player: GKPlayer)` in GameScene is responsable to receive all messages. Example:
+The method `didReceive(message: Message, from player: GKPlayer)` in GameScene is responsable to receive all messages. Example, with `Position`, `Attack` and `StarGame` messages:
 
 ```swift
   func didReceive(message: Message, from player: GKPlayer) {
