@@ -11,7 +11,7 @@ import MultiplayerKit
 
 class GameScene: SKScene, MKGameScene {
 
-    var multiplayerService = MultiplayerService(Position.self, Attack.self, StartGame.self)
+    var multiplayerService = MultiplayerService(messageTypes: [Position.self, Attack.self, StartGame.self])
     var inputController: InputController!
     var isTraining = false
     var background = SKSpriteNode(texture: SKTexture(imageNamed: "desert-backgorund"))
@@ -21,7 +21,6 @@ class GameScene: SKScene, MKGameScene {
     init(isTraining: Bool = false) {
         self.isTraining = isTraining
         super.init(size: .zero)
-        multiplayerService.gameScene = self
         anchorPoint = CGPoint(x: 0.5, y: 0.5)
         scaleMode = .resizeFill
     }
@@ -39,6 +38,7 @@ class GameScene: SKScene, MKGameScene {
         setupJoystick()
         setupPlayers()
         physicsWorld.contactDelegate = self
+        multiplayerService.gameScene = self
     }
 
     func setupBackground() {

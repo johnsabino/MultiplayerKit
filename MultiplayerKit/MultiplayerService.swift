@@ -16,7 +16,7 @@ public class MultiplayerService: NSObject {
             MatchService.shared.setGameScene(gameScene)
         }
     }
-    public init(_ messageTypes: Message.Type ...) {
+    public init(messageTypes: [Message.Type]) {
         self.messageTypes = messageTypes
     }
     
