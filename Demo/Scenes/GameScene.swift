@@ -158,16 +158,3 @@ extension GameScene: SKPhysicsContactDelegate {
 
     }
 }
-
-class Other: SKScene, MKGameScene {
-    var multiplayerService: MultiplayerService = MultiplayerService(Position.self)
-    
-    func didReceive(message: Message, from player: GKPlayer) {
-
-    }
-    
-    func didPlayerConnected() {
-        
-    }
-
-}
