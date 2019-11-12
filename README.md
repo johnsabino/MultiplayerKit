@@ -63,7 +63,10 @@ startButton.actionBlock = presentMatchMaker
 After Game Scene conforms to MKGameScene, you must associate the scene:
 
 ```swift
-multiplayerService.gameScene = self
+override func didMove(to view: SKView) {
+    multiplayerService.gameScene = self
+    //...
+}
 ```
 
 You can access all player in the match through `multiplayerService.players`. Example allocating all players in the scene:
