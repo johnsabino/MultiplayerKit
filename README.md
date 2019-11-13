@@ -9,6 +9,7 @@ MultiplayerKit is a framework that facilitates Multiplayer Games development in 
 ## Requirements
 - Game Center Capability
 - Your game must be registered in [App Store Connect](https://appstoreconnect.apple.com)
+- Create at least one leaderborard for your game in App Store Connect, even if you will not use(Its necessary to associate the game to bundle id).
 
 
 ## Example
