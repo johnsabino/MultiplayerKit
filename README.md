@@ -123,7 +123,7 @@ multiplayerService.send(position)
 
 # Receive Messages
 
-The method `didReceive(message: Message, from player: GKPlayer)` in GameScene is responsable to receive all messages. Example, with `Position`, `Attack` and `StarGame` messages:
+The method `didReceive(message: Message, from player: GKPlayer)` in GameScene is responsable to receive all messages. Example, with `Position`, `Attack` and `StartGame` messages:
 
 ```swift
   func didReceive(message: Message, from player: GKPlayer) {
