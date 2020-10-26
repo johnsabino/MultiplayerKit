@@ -10,11 +10,23 @@ import SpriteKit
 
 class InputController: SKSpriteNode {
     var joystick: JoystickNode!
-    weak var joystickDelegate: JoystickDelegate?
-    var virtualButtonA: VirtualButtonNode!
-    var virtualButtonB: VirtualButtonNode!
     var isDown: Bool = false
     var touchLeft = UITouch()
+    weak var joystickDelegate: JoystickDelegate?
+    
+    lazy var virtualButtonA: VirtualButtonNode = {
+        VirtualButtonNode(name: "A",
+                          radius: 40,
+                          fillColor: SKColor.gray,
+                          inPosition: CGPoint(x: (self.size.width/2) - 255, y: -(self.size.height/2) + 130))
+    }()
+    
+    lazy var virtualButtonB: VirtualButtonNode = {
+        VirtualButtonNode(name: "B",
+                          radius: 40,
+                          fillColor: SKColor.gray,
+                          inPosition: CGPoint(x: (self.size.width/2) - 210, y: -(self.size.height/2) + 160))
+    }()
 
     init(size: CGSize) {
 
@@ -35,11 +47,6 @@ class InputController: SKSpriteNode {
                                            fillColor: SKColor.gray,
                                            inPosition: positionButtonA)
         addChild(virtualButtonA)
-        let positionButtonB  = CGPoint(x: (self.size.width/2) - 210, y: -(self.size.height/2) + 160)
-        virtualButtonB = VirtualButtonNode(name: "B",
-                                           radius: 40,
-                                           fillColor: SKColor.gray,
-                                           inPosition: positionButtonB)
         addChild(virtualButtonB)
 
         virtualButtonA.actionBlock = {

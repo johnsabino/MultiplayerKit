@@ -60,6 +60,7 @@ class SpaceShip: MPSpriteNode {
         bullet.zRotation = zRotation
         bullet.position = position
         bullet.name = isLocalPlayer ? "allyBullet" : "enemyBullet"
+        
         let pb = SKPhysicsBody(rectangleOf: bullet.size)
         pb.affectedByGravity = false
         pb.categoryBitMask = ColliderType.bullet
