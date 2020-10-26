@@ -9,8 +9,8 @@
 import Foundation
 
 public extension Notification.Name {
-    //notifies the menu scene to present an online game
+    ///Notifies the menu scene to present an online game
     static let presentGame = Notification.Name(rawValue: "presentGame")
-    //notifies the app of any authentication state changed
+    ///Notifies the app of any authentication state changed
     static let authenticationChanged = Notification.Name(rawValue: "authenticationChanged")
 }

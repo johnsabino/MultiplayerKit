@@ -76,22 +76,9 @@ public class Matchmaker: NSObject, GKMatchmakerViewControllerDelegate {
         viewController.dismiss(animated: true)
     }
 
-    public func matchmakerViewController(_ viewController: GKMatchmakerViewController, didFailWithError error: Error) {
-    }
+    public func matchmakerViewController(_ viewController: GKMatchmakerViewController, didFailWithError error: Error) { }
 }
 
 extension Matchmaker: GKLocalPlayerListener {
-    public func player(_ player: GKPlayer, didAccept invite: GKInvite) {
-
-//        guard GKLocalPlayer.local.isAuthenticated else {return}
-//
-//        GKMatchmaker.shared().match(for: invite) { (match, error) in
-//
-//            if let error = error {
-//                print("Error while accept invite: \(error)")
-//            } else if let match = match {
-//                self.startGame(match: match)
-//            }
-//        }
-    }
+    public func player(_ player: GKPlayer, didAccept invite: GKInvite) { }
 }

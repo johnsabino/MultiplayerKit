@@ -17,10 +17,6 @@ class MatchService: NSObject, GKMatchDelegate {
     weak var receiveDataDelegate: ReceiveDataDelegate?
     weak var gamePresentationDelegate: GamePresentationDelegate?
 
-    override public init() {
-        super.init()
-    }
-
     func setGameScene(_ gameScene: MKGameScene?) {
         connectionDelegate = gameScene
         receiveDataDelegate = gameScene
@@ -36,17 +32,8 @@ class MatchService: NSObject, GKMatchDelegate {
     }
 
     public func match(_ match: GKMatch, player: GKPlayer, didChange state: GKPlayerConnectionState) {
-        if self.currentMatch != match { return }
-
-        switch state {
-        case .connected:
-            print("Player Conected!")
+        if self.currentMatch == match && state == .connected {
             connectionDelegate?.didPlayerConnected()
-
-        case .disconnected:
-            print("Player Disconected!")
-        default:
-            print(state)
         }
     }
 
@@ -56,7 +43,5 @@ class MatchService: NSObject, GKMatchDelegate {
         gamePresentationDelegate?.willStartGame()
     }
     
-    func setMatchDelegate(_ multiplayerService: MultiplayerService) {
-        
-    }
+    func setMatchDelegate(_ multiplayerService: MultiplayerService) { }
 }
