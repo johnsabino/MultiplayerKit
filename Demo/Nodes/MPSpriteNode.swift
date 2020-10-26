@@ -10,7 +10,7 @@ import SpriteKit
 import MultiplayerKit
 
 open class MPSpriteNode: SKSpriteNode {
-    public var gkPlayer: GKPlayer
+    public let gkPlayer: GKPlayer
     public var isLocalPlayer: Bool {
         return gkPlayer == GKLocalPlayer.local
     }
@@ -31,13 +31,9 @@ open class MPSpriteNode: SKSpriteNode {
         fatalError("init(coder:) has not been implemented")
     }
 
-    public func send<T: Message>(message: T) {
-       // if isLocalPlayer { mpKit.send(message) }
-    }
+    public func send<T: Message>(message: T) { }
 
-    public func sendPosition() {
-        //send(message: Position(x: position.x, y: position.y, angle: zRotation))
-    }
+    public func sendPosition() { }
 
     public func changePlayer(position: CGPoint, angle: CGFloat = 0, smoothness: Double = 0.05) {
         run(SKAction.move(to: position, duration: smoothness))
