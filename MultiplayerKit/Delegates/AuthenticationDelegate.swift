@@ -6,7 +6,6 @@
 //  Copyright © 2019 João Paulo de Oliveira Sabino. All rights reserved.
 //
 
-import Foundation
 public protocol AuthenticationDelegate: class {
     func didAuthenticationChanged(to state: Matchmaker.AuthenticationState)
 }

@@ -6,8 +6,6 @@
 //  Copyright © 2019 João Paulo de Oliveira Sabino. All rights reserved.
 //
 
-import Foundation
-
 public protocol GamePresentationDelegate: class {
     func willStartGame()
 }
